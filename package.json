@@ -1,0 +1,16 @@
+{
+  "name": "poe-gear-finder",
+  "private": true,
+  "version": "0.0.0",
+  "main": "lib/shell/main.js",
+  "license": "ISC",
+  "scripts": {
+    "start": "webpack-dev-server --config ./app/webpack.config.js",
+    "build": "tsc --pretty -p ./shell",
+    "build:app": "webpack --config ./app/webpack.config.js"
+  },
+  "workspaces": [
+    "app",
+    "shell"
+  ]
+}
