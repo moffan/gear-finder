@@ -1,5 +1,5 @@
 import { useUserService } from "../user";
-import { apiService, useLocaleStorage, decodeItem } from "../common";
+import { apiService, usePersistedState, decodeItem } from "../common";
 import { PoeRequests } from "../../common";
 import {
   PoeCharacter,
@@ -21,8 +21,9 @@ const useEquipmentService = (
   characterName: string
 ): [PoeCharacter, PoeCharacterEquipment] => {
   const [{ sessionId, username: accountName }] = useUserService();
-  const [{ character, items }, setCharacterInfo] = useLocaleStorage(
-    characterName
+  const [{ character, items }, setCharacterInfo] = usePersistedState<any>(
+    characterName,
+    {}
   );
 
   if (!character) {

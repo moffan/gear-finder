@@ -1,4 +1,4 @@
-import { useLocaleStorage } from "../common";
+import { usePersistedState } from "../common";
 
 interface UserState {
   username: string;
@@ -14,7 +14,7 @@ const useUserService = (): [
   (username: string, sessionId: string) => void
 ] => {
   const key = "user";
-  const [user, setUser] = useLocaleStorage(key, {
+  const [user, setUser] = usePersistedState<any>(key, {
     username: "",
     sessionId: ""
   });

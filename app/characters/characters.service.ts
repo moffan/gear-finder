@@ -1,14 +1,14 @@
-import { apiService, useLocaleStorage } from "../common";
-import { Channels } from "../../common";
+import { apiService, usePersistedState } from "../common";
+import { PoeRequests } from "../../common";
 import { PoeCharacter } from "../common/poe.models";
 
 const useCharactersService = (sessionId: string): [PoeCharacter[]] => {
   const key = "characters";
-  const [characters, setValue] = useLocaleStorage(key, []);
+  const [characters, setValue] = usePersistedState<PoeCharacter[]>(key, []);
 
   if (!characters.length) {
     apiService
-      .send<any[]>(Channels.UserInfo, {
+      .send<PoeCharacter[]>(PoeRequests.CharacterList, {
         sessionId
       })
       .then(poeCharacters => setValue(poeCharacters));
