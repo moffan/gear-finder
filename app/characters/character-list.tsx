@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { RouteComponentProps } from "react-router";
 import {
   CardContent,
@@ -18,6 +18,7 @@ import { red } from "@material-ui/core/colors";
 import { useUserService } from "../user";
 import useCharactersService from "./characters.service";
 import { PoeCharacter } from "../common/poe.models";
+import { PoeContext } from "../poe-provider";
 
 const styles = (theme: Theme) => ({
   card: {
@@ -95,38 +96,23 @@ const CharacterList: React.FunctionComponent<RouteComponentProps> = ({
 }) => {
   const [{ sessionId }] = useUserService();
   const [characters] = useCharactersService(sessionId);
+  const { selectedLeague } = useContext(PoeContext);
 
   const goto = (character: PoeCharacter) => {
     history.push(`/character/${character.name}`);
   };
+
   return (
     <>
-      {/* <form autoComplete="off">
-        <FormControl>
-          <Select
-            autoWidth
-            value={this.props.leagueFilter}
-            onChange={event => this.props.onSetLeagueFilter(event.target.value)}
-            inputProps={{
-              name: "league",
-              id: "league-simple"
-            }}
-          >
-            <MenuItem key="null" value="" disabled>
-              Placeholder
-            </MenuItem>
-            {this.props.leagues.map((league, index) => (
-              <MenuItem key={index} value={league.id}>
-                {league.id}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>Select league</FormHelperText>
-        </FormControl>
-      </form> */}
-      {characters.map((character: PoeCharacter, index: number) => {
-        return <CharacterListItem key={index} {...character} onSelect={goto} />;
-      })}
+      {characters
+        .filter((item: PoeCharacter) =>
+          selectedLeague ? item.league === selectedLeague : true
+        )
+        .map((character: PoeCharacter, index: number) => {
+          return (
+            <CharacterListItem key={index} {...character} onSelect={goto} />
+          );
+        })}
     </>
   );
 };

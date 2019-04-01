@@ -3,45 +3,33 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  RouteProps,
-  Link
+  RouteProps
 } from "react-router-dom";
-import { Icon, AppBar, Toolbar, withStyles } from "@material-ui/core";
 
 import PrivateRoute from "./private-route";
 import LoginScreen from "../user/login-screen";
 import CharacterList from "../characters/character-list";
 import CharacterSheet from "../characters/character-sheet";
+import AppToolBar from "../app-tool-bar";
+import PoeProvider from "../poe-provider";
 
 export interface RouterProps extends RouteProps {
   isAuthenticated: boolean;
 }
 
-const router: React.FunctionComponent<any> = ({ classes }) => {
+const AppRouter: React.FunctionComponent<any> = () => {
   return (
     <Router>
-      <>
-        <AppBar position="static" color="default">
-          <Toolbar>
-            <Link to="/">
-              <Icon className={classes.icon}>home</Icon>
-            </Link>
-          </Toolbar>
-        </AppBar>
+      <PoeProvider>
+        <AppToolBar />
         <Switch>
           <PrivateRoute path="/character/:name" component={CharacterSheet} />
           <PrivateRoute exact path="/" component={CharacterList} />
           <Route path="/login" component={LoginScreen} />
         </Switch>
-      </>
+      </PoeProvider>
     </Router>
   );
 };
 
-const styles = (theme: any) => ({
-  icon: {
-    margin: theme.spacing.unit * 2
-  }
-});
-
-export default withStyles(styles)(router);
+export default AppRouter;
