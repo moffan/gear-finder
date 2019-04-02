@@ -1,11 +1,7 @@
 import { useUserService } from "../user";
 import { apiService, usePersistedState, decodeItem } from "../common";
 import { PoeRequests } from "../../common";
-import {
-  PoeCharacter,
-  PoeItem,
-  PoeCharacterEquipment
-} from "../common/poe.models";
+import { PoeCharacter, PoeItem, PoeCharacterEquipment } from "../poe-content";
 
 interface PoeGetItemsResponse {
   character: PoeCharacter;

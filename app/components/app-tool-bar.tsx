@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-import { PoeContext } from "./poe-provider";
+import { PoeContext } from "../poe-content";
 
 const AppToolBar: React.FunctionComponent<StyledComponentProps> = ({
   classes

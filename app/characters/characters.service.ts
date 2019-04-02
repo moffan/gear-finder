@@ -1,6 +1,6 @@
 import { apiService, usePersistedState } from "../common";
 import { PoeRequests } from "../../common";
-import { PoeCharacter } from "../common/poe.models";
+import { PoeCharacter } from "../poe-content";
 
 const useCharactersService = (sessionId: string): [PoeCharacter[]] => {
   const key = "characters";

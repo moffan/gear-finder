@@ -85,3 +85,17 @@ export interface PoeItem {
   isRelic: boolean; //
   category: any[];
 }
+
+export interface LeagueData {
+  id: string;
+  text: string;
+}
+
+export interface PoeStats {
+  entries: {
+    id: string;
+    text: string;
+    type: string;
+  }[];
+  label: string;
+}

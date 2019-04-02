@@ -50,4 +50,4 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)<IModsProps>(Mods);
+export default withStyles(styles)<any>(Mods);

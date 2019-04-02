@@ -17,8 +17,7 @@ import { red } from "@material-ui/core/colors";
 
 import { useUserService } from "../user";
 import useCharactersService from "./characters.service";
-import { PoeCharacter } from "../common/poe.models";
-import { PoeContext } from "../poe-provider";
+import { PoeContext, PoeCharacter } from "../poe-content";
 
 const styles = (theme: Theme) => ({
   card: {

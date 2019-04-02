@@ -1,4 +1,4 @@
-import { PoeItem } from "./poe.models";
+import { PoeItem } from "../poe-content";
 
 export function decodeItem(item: PoeItem) {
   return { ...item, name: decode(item.name), typeLine: decode(item.typeLine) };

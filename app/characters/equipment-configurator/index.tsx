@@ -1,14 +1,15 @@
 import React from "react";
-import { IPoeItem } from "../../common/poe.models";
 import { WithStyles, withStyles } from "@material-ui/core/styles";
+
 import ItemInfo from "./item-info/item-info";
+import { PoeItem } from "../../common";
 
 export interface EquipmentConfiguratorProps {
-  item: IPoeItem;
+  item: PoeItem;
 }
 
 class EquipmentConfigurator extends React.Component<
-  WithStyles<typeof styles> & IEquipmentConfiguratorProps
+  WithStyles<typeof styles> & EquipmentConfiguratorProps
 > {
   public render() {
     const { item, classes } = this.props;
@@ -24,7 +25,7 @@ class EquipmentConfigurator extends React.Component<
   }
 }
 
-const styles = theme => ({
+const styles = (_theme: any) => ({
   root: {
     display: "grid",
     "grid-template-rows": "1fr 1fr"
@@ -39,16 +40,13 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)<IEquipmentConfiguratorProps>(
-  EquipmentConfigurator
-);
+export default withStyles(styles)<any>(EquipmentConfigurator);
 
 // import { connect } from "react-redux";
 
 // import EquipmentConfigurator, {
 //   IEquipmentConfiguratorProps
 // } from "./equipment-configurator";
-// import { IPoeItem } from "../../common/poe.models";
 
 // export default connect(
 //   (

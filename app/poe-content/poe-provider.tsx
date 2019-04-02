@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { usePersistedState } from "./common";
+import React from "react";
 
-export interface LeagueData {
-  id: string;
-  text: string;
-}
+import { usePersistedState } from "../common";
+import useAvailableLeagues from "./available-leagues.hook";
+import useStats from "./stats.hook";
+import { LeagueData } from ".";
+
 const selectedLeagueKey = "selectedLeague";
-const availableLeaguesKey = "availableLeagues";
 
 export const PoeContext = React.createContext<{
   availableLeagues: LeagueData[];
@@ -19,18 +18,8 @@ export const PoeContext = React.createContext<{
 });
 
 const PoeProvider: React.FunctionComponent = ({ children }) => {
-  const [availableLeagues, setAvailableLeagues] = usePersistedState<
-    LeagueData[]
-  >(availableLeaguesKey, []);
-
-  useEffect(() => {
-    setAvailableLeagues([
-      { id: "Synthesis", text: "Synthesis" },
-      { id: "Hardcore Synthesis", text: "Hardcore Synthesis" },
-      { id: "Standard", text: "Standard" },
-      { id: "Hardcore", text: "Hardcore" }
-    ]);
-  }, []);
+  const availableLeagues = useAvailableLeagues();
+  const stats = useStats();
 
   const [selectedLeague, setSelectedLeague] = usePersistedState<
     LeagueData | string

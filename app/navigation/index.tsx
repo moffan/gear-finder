@@ -10,8 +10,8 @@ import PrivateRoute from "./private-route";
 import LoginScreen from "../user/login-screen";
 import CharacterList from "../characters/character-list";
 import CharacterSheet from "../characters/character-sheet";
-import AppToolBar from "../app-tool-bar";
-import PoeProvider from "../poe-provider";
+import { PoeProvider } from "../poe-content";
+import { AppToolBar } from "../components";
 
 export interface RouterProps extends RouteProps {
   isAuthenticated: boolean;
