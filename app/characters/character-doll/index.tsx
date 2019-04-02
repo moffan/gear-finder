@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { withStyles } from "@material-ui/core";
+
 import ItemSlot from "./item-slot";
 import WeaponSlot from "./weapon-slot";
 import FlasksSlot from "./flasks-slot";
-import { PoeItem, PoeCharacterEquipment } from "../../common/poe.models";
-import { withStyles } from "@material-ui/core";
+import { PoeItem, PoeCharacterEquipment } from "../../poe-content";
 
 export interface CharacterDollProps extends PoeCharacterEquipment {
   onItemSelected: (item: PoeItem) => void;

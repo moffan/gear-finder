@@ -1,5 +1,5 @@
 import React from "react";
-import { PoeItem } from "../../common/poe.models";
+import { PoeItem } from "../../poe-content";
 
 const itemSlot = ({
   item,

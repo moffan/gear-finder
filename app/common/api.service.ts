@@ -2,7 +2,7 @@ import { ipcRenderer } from "electron";
 import { IpcRequest, UUID } from "../../common";
 
 const apiService = {
-  send<T>(channel: string, payload: any): Promise<T> {
+  send<T>(channel: string, payload: any = null): Promise<T> {
     const requestId = `${channel}_${UUID()}`;
     const options: IpcRequest = {
       onSuccess: `${requestId}_SUCCESS`,

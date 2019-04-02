@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { withStyles, StyledComponentProps } from "@material-ui/core/styles";
 import { RouteComponentProps } from "react-router-dom";
 
-import { PoeCharacter, PoeItem } from "../common/poe.models";
 import useEquipmentService from "./equipment.service";
 import CharacterDoll from "./character-doll";
 import EquipmentConfigurator from "./equipment-configurator";
+import { PoeCharacter, PoeItem } from "../poe-content";
 
 const CharacterDetails = ({ name }: PoeCharacter) => <h1>{name}</h1>;
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import ItemSlot from "./item-slot";
-import { PoeItem } from "../../common/poe.models";
+import { PoeItem } from "../../poe-content";
 
 const WeaponSlot = ({
   activeSet,
