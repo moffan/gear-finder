@@ -6,7 +6,9 @@ export enum Channels {
 
 export enum PoeRequests {
   CharacterList = "POE_CHARACTER_LIST",
-  Character = "POE_CHARACTER"
+  Character = "POE_CHARACTER",
+  CurrentLeagues = "POE_LEAGUES_CURRENT",
+  Stats = "POE_STATS"
 }
 
 export interface IpcRequest {
