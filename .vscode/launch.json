@@ -10,6 +10,7 @@
       "windows": {
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
+      "preLaunchTask": "build:shell",
       "args": ["."],
       "outputCapture": "std"
     }

@@ -6,7 +6,8 @@
   "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server --config ./app/webpack.config.js",
-    "build": "yarn workspaces run build"
+    "build": "yarn workspaces run build",
+    "build:shell": "tsc --pretty -p ./shell"
   },
   "workspaces": [
     "app",
