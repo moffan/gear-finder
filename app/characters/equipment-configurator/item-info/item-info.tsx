@@ -1,5 +1,5 @@
 import React from "react";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
+import styled from "@emotion/styled";
 
 import Description from "./description";
 import Mods from "./mods";
@@ -9,26 +9,28 @@ export interface ItemInfoProps {
   item: PoeItem;
 }
 
-type Props = ItemInfoProps & WithStyles<typeof styles>;
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+`;
 
-const ItemInfo = ({ item, classes }: Props) => (
-  <div className={classes.root}>
-    <div className={classes.description}>
+const DescriptionContainer = styled.div`
+  grid-column: 1;
+`;
+
+const ModsContainer = styled.div`
+  grid-column: 2;
+`;
+
+const ItemInfo = ({ item }: ItemInfoProps) => (
+  <Container>
+    <DescriptionContainer>
       <Description {...item} item={item} />
-    </div>
-    <div className={classes.mods}>
+    </DescriptionContainer>
+    <ModsContainer>
       <Mods {...item} onClick={(mod: any) => console.log(mod)} />
-    </div>
-  </div>
+    </ModsContainer>
+  </Container>
 );
 
-const styles = (theme: any) => ({
-  root: {
-    display: "grid",
-    "grid-template-columns": "1fr 5fr"
-  },
-  description: { "grid-column": 1 },
-  mods: { "grid-column": 2 }
-});
-
-export default withStyles(styles)<any>(ItemInfo);
+export default ItemInfo;

@@ -1,6 +1,8 @@
 import React from "react";
 
-const Category = ({ categories }) => (
+const Category: React.FunctionComponent<{ categories: any }> = ({
+  categories
+}) => (
   <div>
     {Object.keys(categories).map((category, index) => (
       <div key={index}>{category}</div>
@@ -8,7 +10,13 @@ const Category = ({ categories }) => (
   </div>
 );
 
-const Description = ({ icon, name, typeLine, category, item }) => (
+const Description: React.FunctionComponent<{
+  icon: any;
+  name: any;
+  typeLine: any;
+  category: any;
+  item: any;
+}> = ({ icon, name, typeLine, category, item }) => (
   <div>
     <picture onClick={() => console.log(item)}>
       <img src={icon} />
