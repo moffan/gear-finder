@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import { StyledComponentProps, withStyles } from "@material-ui/core";
-import { StyleRules } from "@material-ui/core/styles";
 import { Redirect } from "react-router-dom";
 
 import useUserService from "./user.service";
 
-const LoginScreen: React.FunctionComponent<StyledComponentProps> = ({
-  classes
-}) => {
+const LoginScreen: React.FunctionComponent = () => {
   const [user, login] = useUserService();
   const [username, setUsername] = useState(user.username);
   const [sessionId, setSessionId] = useState(user.sessionId);
@@ -20,41 +13,28 @@ const LoginScreen: React.FunctionComponent<StyledComponentProps> = ({
   }
 
   return (
-    <form
-      className={classes && classes.container}
-      noValidate
-      autoComplete="off"
-    >
-      <Typography color="textSecondary">Login</Typography>
-      <TextField
+    <form noValidate autoComplete="off">
+      <span>Login</span>
+      <input
         required
-        id="username"
         value={username}
         type="text"
-        margin="normal"
         onChange={event => setUsername(event.target.value)}
       />
-      <TextField
+      <input
         required
-        id="password"
-        label="Session ID"
         value={sessionId}
         type="password"
-        margin="normal"
         onChange={event => setSessionId(event.target.value)}
       />
-      <Button
-        variant="outlined"
-        disabled={!sessionId}
-        onClick={() => login(username, sessionId)}
-      >
+      <button disabled={!sessionId} onClick={() => login(username, sessionId)}>
         Login
-      </Button>
+      </button>
     </form>
   );
 };
 
-const styles: StyleRules = {
+const styles = {
   root: {
     color: "red",
     "&$checked": {
@@ -64,4 +44,4 @@ const styles: StyleRules = {
   checked: {}
 };
 
-export default withStyles(styles)(LoginScreen);
+export default LoginScreen;

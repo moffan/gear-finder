@@ -1,27 +1,38 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+import styled from "@emotion/styled";
+
+import { IconButton } from "../../../components";
 
 export interface ModsProps {
   implicitMods: any;
   explicitMods: any;
   onClick: (mod: any) => void;
 }
-const ModLine = ({ mod, classes, onClick }) => (
-  <div className={classes.modLine}>
-    <Icon className={classes.icon} onClick={() => onClick(mod)}>
-      add_circle
-    </Icon>
+
+const ModLineContainer = styled.div`
+  display: flex;
+  border: 1px solid red;
+  "align-items":center ;
+`;
+
+const ModLine: React.FunctionComponent<any> = ({ mod, onClick }) => (
+  <ModLineContainer>
+    <IconButton icon="add_circle" onClick={() => onClick(mod)} />
     {mod}
-  </div>
+  </ModLineContainer>
 );
 
-const Mods = ({ implicitMods, explicitMods, onClick, classes }) => (
+const Mods: React.FunctionComponent<any> = ({
+  implicitMods,
+  explicitMods,
+  onClick,
+  classes
+}) => (
   <div>
     {implicitMods && (
       <>
         <h1>Implicit</h1>
-        {implicitMods.map((mod, index) => (
+        {implicitMods.map((mod: any, index: number) => (
           <ModLine key={index} mod={mod} onClick={onClick} classes={classes} />
         ))}
       </>
@@ -30,7 +41,7 @@ const Mods = ({ implicitMods, explicitMods, onClick, classes }) => (
     {explicitMods && (
       <>
         <h1>Explicit</h1>
-        {explicitMods.map((mod, index) => (
+        {explicitMods.map((mod: any, index: number) => (
           <ModLine key={index} mod={mod} onClick={onClick} classes={classes} />
         ))}
       </>
@@ -38,16 +49,4 @@ const Mods = ({ implicitMods, explicitMods, onClick, classes }) => (
   </div>
 );
 
-const styles = theme => ({
-  icon: {
-    margin: theme.spacing.unit,
-    cursor: "pointer"
-  },
-  modLine: {
-    display: "flex",
-    border: "1px solid red",
-    "align-items": "center"
-  }
-});
-
-export default withStyles(styles)<any>(Mods);
+export default Mods;

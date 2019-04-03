@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { withStyles } from "@material-ui/core";
 
 import ItemSlot from "./item-slot";
 import WeaponSlot from "./weapon-slot";
@@ -131,4 +130,4 @@ const styles = {
   }
 };
 
-export default withStyles(styles)(characterDoll);
+export default characterDoll;
