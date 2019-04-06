@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "@emotion/styled";
 
 import ItemSlot from "./item-slot";
 import WeaponSlot from "./weapon-slot";
@@ -9,6 +10,61 @@ export interface CharacterDollProps extends PoeCharacterEquipment {
   onItemSelected: (item: PoeItem) => void;
 }
 
+const Doll = styled.div`
+  border: 5px black solid;
+  padding: 5px;
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+`;
+
+const Amulet = styled.div`
+  grid-column: 4;
+  grid-row: 2;
+`;
+
+const Belt = styled.div`
+  grid-column: 3;
+  grid-row: 4;
+`;
+const BodyArmour = styled.div`
+  grid-column: 3;
+  grid-row: 2 / 4;
+`;
+const Boots = styled.div`
+  grid-column: 4;
+  grid-row: 4 / 6;
+`;
+const Flasks = styled.div`
+  grid-column: 3 / 5;
+  grid-row: 5;
+`;
+const Gloves = styled.div`
+  grid-column: 2;
+  grid-row: 4 / 6;
+`;
+const Helm = styled.div`
+  grid-column: 3;
+  grid-row: 1;
+`;
+const Ring1 = styled.div`
+  grid-column: 2;
+  grid-row: 3;
+`;
+const Ring2 = styled.div`
+  grid-column: 4;
+  grid-row: 3;
+`;
+const WeaponSlot1 = styled.div`
+  grid-column: 1;
+  grid-row: 1 / 6;
+`;
+const WeaponSlot2 = styled.div`
+  grid-column: 5;
+  grid-row: 1 / 6;
+`;
+
 const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
   const [activeSet, setActiveSet] = useState<1 | 2>(1);
 
@@ -17,8 +73,8 @@ const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.weaponSlot1}>
+    <Doll>
+      <WeaponSlot1>
         <WeaponSlot
           onClick={props.onItemSelected}
           onSwitchWeaponSet={switchWeaponSet}
@@ -26,9 +82,9 @@ const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
           weapon1={props.Weapon}
           weapon2={props.Weapon2}
         />
-      </div>
+      </WeaponSlot1>
 
-      <div style={styles.weaponSlot2}>
+      <WeaponSlot2>
         <WeaponSlot
           onClick={props.onItemSelected}
           onSwitchWeaponSet={switchWeaponSet}
@@ -36,98 +92,45 @@ const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
           weapon1={props.Offhand}
           weapon2={props.Offhand2}
         />
-      </div>
+      </WeaponSlot2>
 
-      <div style={styles.amulet}>
+      <Amulet>
         <ItemSlot onClick={props.onItemSelected} item={props.Amulet} />
-      </div>
+      </Amulet>
 
-      <div style={styles.ring1}>
+      <Ring1>
         <ItemSlot onClick={props.onItemSelected} item={props.Ring} />
-      </div>
+      </Ring1>
 
-      <div style={styles.ring2}>
+      <Ring2>
         <ItemSlot onClick={props.onItemSelected} item={props.Ring2} />
-      </div>
+      </Ring2>
 
-      <div style={styles.helm}>
+      <Helm>
         <ItemSlot onClick={props.onItemSelected} item={props.Helm} />
-      </div>
+      </Helm>
 
-      <div style={styles.bodyArmour}>
+      <BodyArmour>
         <ItemSlot onClick={props.onItemSelected} item={props.BodyArmour} />
-      </div>
+      </BodyArmour>
 
-      <div style={styles.belt}>
+      <Belt>
         <ItemSlot onClick={props.onItemSelected} item={props.Belt} />
-      </div>
+      </Belt>
 
-      <div style={styles.gloves}>
+      <Gloves>
         <ItemSlot onClick={props.onItemSelected} item={props.Gloves} />
-      </div>
+      </Gloves>
 
-      <div style={styles.boots}>
+      <Boots>
         <ItemSlot onClick={props.onItemSelected} item={props.Boots} />
-      </div>
+      </Boots>
 
-      <div style={styles.flasks}>
+      <Flasks>
         <FlasksSlot onClick={props.onItemSelected} flasks={props.Flask} />
-      </div>
-    </div>
+      </Flasks>
+    </Doll>
   );
-};
-
-const styles = {
-  container: {
-    width: "50%",
-    display: "grid",
-    gridTemplateColumns: "repeat(5, 1fr)",
-    gridTemplateRows: "repeat(5, 1fr)"
-  },
-  amulet: {
-    gridColumn: 4,
-    gridRow: 2
-  },
-  belt: {
-    gridColumn: 3,
-    gridRow: 4
-  },
-  bodyArmour: {
-    gridColumn: 3,
-    gridRow: "2 / 4"
-  },
-  boots: {
-    gridColumn: 4,
-    gridRow: "4 / 6"
-  },
-  flasks: {
-    gridColumn: "3 / 5",
-    gridRow: 5
-  },
-  gloves: {
-    gridColumn: 2,
-    gridRow: "4 / 6"
-  },
-  helm: {
-    gridColumn: 3,
-    gridRow: 1
-  },
-  ring1: {
-    gridColumn: 2,
-    gridRow: 3
-  },
-  ring2: {
-    gridColumn: 4,
-    gridRow: 3
-  },
-  weaponSlot1: {
-    gridColumn: 1,
-    gridRow: "1 / 6"
-  },
-  weaponSlot2: {
-    gridColumn: 5,
-    gridRow: "1 / 6"
-  }
 };
 
 export default characterDoll;

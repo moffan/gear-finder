@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import ItemInfo from "./item-info/item-info";
+import ItemFilter from "./item-filter/item-filter";
 import { PoeItem } from "../../poe-content";
 
 export interface EquipmentConfiguratorProps {
@@ -13,16 +14,6 @@ const Container = styled.div`
   grid-template-rows: 1fr 1fr;
 `;
 
-const ItemInfoContainer = styled.div`
-  background: gray;
-  grid-row: 1;
-`;
-
-const ItemFilterContainer = styled.div`
-  background-color: #dadee2;
-  grid-row: 2;
-`;
-
 class EquipmentConfigurator extends React.Component<
   EquipmentConfiguratorProps
 > {
@@ -31,10 +22,8 @@ class EquipmentConfigurator extends React.Component<
 
     return (
       <Container>
-        <ItemInfoContainer>
-          <ItemInfo item={item} />
-        </ItemInfoContainer>
-        <ItemFilterContainer>Item filter</ItemFilterContainer>
+        <ItemInfo item={item} />
+        <ItemFilter />
       </Container>
     );
   }
