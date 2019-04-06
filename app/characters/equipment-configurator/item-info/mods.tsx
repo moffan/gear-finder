@@ -9,17 +9,21 @@ export interface ModsProps {
   onClick: (mod: any) => void;
 }
 
-const ModLineContainer = styled.div`
+const Container = styled.div`
+  grid-column: 2;
+`;
+
+const ModLines = styled.div`
   display: flex;
   border: 1px solid red;
   "align-items":center ;
 `;
 
 const ModLine: React.FunctionComponent<any> = ({ mod, onClick }) => (
-  <ModLineContainer>
+  <ModLines>
     <IconButton icon="add_circle" onClick={() => onClick(mod)} />
     {mod}
-  </ModLineContainer>
+  </ModLines>
 );
 
 const Mods: React.FunctionComponent<any> = ({
@@ -28,7 +32,7 @@ const Mods: React.FunctionComponent<any> = ({
   onClick,
   classes
 }) => (
-  <div>
+  <Container>
     {implicitMods && (
       <>
         <h1>Implicit</h1>
@@ -46,7 +50,7 @@ const Mods: React.FunctionComponent<any> = ({
         ))}
       </>
     )}
-  </div>
+  </Container>
 );
 
 export default Mods;

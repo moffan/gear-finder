@@ -10,7 +10,7 @@ const CharacterListItem: React.FunctionComponent<
   PoeCharacter & { onSelect: (character: PoeCharacter) => void }
 > = ({ onSelect, ...character }) => {
   return (
-    <Card onClick={() => console.log(character)}>
+    <Card>
       <CardHeader
         title={character.name}
         subheader={`Level ${character.level} ${character.class}`}

@@ -1,4 +1,9 @@
 import React from "react";
+import styled from "@emotion/styled";
+
+const Container = styled.div`
+  grid-column: 1;
+`;
 
 const Category: React.FunctionComponent<{ categories: any }> = ({
   categories
@@ -17,7 +22,7 @@ const Description: React.FunctionComponent<{
   category: any;
   item: any;
 }> = ({ icon, name, typeLine, category, item }) => (
-  <div>
+  <Container>
     <picture onClick={() => console.log(item)}>
       <img src={icon} />
     </picture>
@@ -25,7 +30,7 @@ const Description: React.FunctionComponent<{
     <div>{typeLine}</div>
     <Category categories={category} />
     <div>flavor text here ?</div>
-  </div>
+  </Container>
 );
 
 export default Description;

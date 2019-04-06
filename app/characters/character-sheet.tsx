@@ -9,7 +9,7 @@ import { PoeCharacter, PoeItem } from "../poe-content";
 
 const Sheet = styled.div`
   display: grid;
-  grid-template-rows: 1fr 20fr;
+  grid-template-rows: 1fr 10fr;
 `;
 
 const Header = styled.div`
@@ -20,12 +20,6 @@ const Content = styled.div`
   display: grid;
   grid-row: 2;
   grid-template-columns: 1fr 1fr;
-`;
-
-const Doll = styled.div`
-  border: 1px black solid;
-  padding: 5px;
-  grid-column: 1;
 `;
 
 const Equipment = styled.div`
@@ -48,9 +42,7 @@ const CharacterSheet: React.FunctionComponent<RouteComponentProps> = ({
         <CharacterDetails {...character} />
       </Header>
       <Content>
-        <Doll>
-          <CharacterDoll {...equipment} onItemSelected={setSelectedItem} />
-        </Doll>
+        <CharacterDoll {...equipment} onItemSelected={setSelectedItem} />
         <Equipment>
           {selectedItem && <EquipmentConfigurator item={selectedItem} />}
         </Equipment>
