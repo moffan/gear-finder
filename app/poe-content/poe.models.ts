@@ -1,3 +1,8 @@
+export interface ItemModSearch {
+  mods?: PoeStat[];
+  mod: string;
+}
+
 export interface PoeLeague {
   endAt: string | null;
   id: string;
@@ -91,11 +96,12 @@ export interface LeagueData {
   text: string;
 }
 
+export interface PoeStat {
+  id: string;
+  text: string;
+  type: string;
+}
 export interface PoeStats {
-  entries: {
-    id: string;
-    text: string;
-    type: string;
-  }[];
+  entries: PoeStat[];
   label: string;
 }
