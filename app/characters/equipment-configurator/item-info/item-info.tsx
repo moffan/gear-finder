@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 
 import Description from "./description";
 import Mods from "./mods";
-import { PoeItem } from "../../../poe-content";
+import { PoeItem, ItemModSearch } from "../../../poe-content";
 
 export interface ItemInfoProps {
   item: PoeItem;
+  onClick: (mod: ItemModSearch) => void;
 }
 
 const Container = styled.div`
@@ -16,11 +17,13 @@ const Container = styled.div`
   grid-template-columns: 1fr 5fr;
 `;
 
-const ItemInfo = ({ item }: ItemInfoProps) => (
-  <Container>
-    <Description {...item} item={item} />
-    <Mods {...item} onClick={(mod: any) => console.log(mod)} />
-  </Container>
-);
+const ItemInfo = ({ item, onClick }: ItemInfoProps) => {
+  return (
+    <Container>
+      <Description {...item} item={item} />
+      <Mods {...item} onClick={onClick} />
+    </Container>
+  );
+};
 
 export default ItemInfo;
