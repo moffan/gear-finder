@@ -3,6 +3,8 @@ import React from "react";
 
 const Container = styled.div`
   margin: 5px;
+  border: 2px solid black;
+  background-color: gray;
 `;
 
 interface CardProps {
