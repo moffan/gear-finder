@@ -4,13 +4,17 @@ import { useUserService } from "../user";
 import { PoeStats } from ".";
 
 const useStats = () => {
-  const [stats, setStats] = usePersistedState<PoeStats[]>("stats", []);
+  const statsKey = "stats";
+
+  const [stats, setStats] = usePersistedState<PoeStats[]>(statsKey, []);
   const [{ sessionId }] = useUserService();
 
   if (!stats.length) {
     apiService
       .send(PoeRequests.Stats, { sessionId })
-      .then(({ result }: any) => setStats(result))
+      .then(({ result }: any) => {
+        setStats(result);
+      })
       .catch(error => console.error(error));
   }
 
