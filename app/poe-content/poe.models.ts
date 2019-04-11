@@ -1,8 +1,3 @@
-export interface ItemModSearch {
-  mods?: PoeStat[];
-  mod: string;
-}
-
 export interface PoeLeague {
   endAt: string | null;
   id: string;
@@ -99,9 +94,32 @@ export interface LeagueData {
 export interface PoeStat {
   id: string;
   text: string;
-  type: string;
+  type: StatType;
 }
+
 export interface PoeStats {
   entries: PoeStat[];
-  label: string;
+  label: StatType;
+}
+
+export enum StatType {
+  Pseudo = "Pseudo",
+  Explicit = "Explicit",
+  Implicit = "Implicit",
+  Fractured = "Fractured",
+  Enchant = "Enchant",
+  Crafted = "Crafted",
+  Veiled = "Veiled",
+  Monster = "Monster",
+  Delve = "Delve"
+}
+
+export interface ItemModSearch extends PoeStat {
+  value: number;
+  regex: string;
+}
+
+export interface ItemMod {
+  type: StatType;
+  text: string;
 }

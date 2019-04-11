@@ -11,20 +11,20 @@ export const PoeContext = React.createContext<{
   availableLeagues: LeagueData[];
   selectedLeague: LeagueData | string;
   setSelectedLeague: (selectedLeague: LeagueData | string) => void;
-  modService: ModService;
+  stats: ModService;
 }>({} as any);
 
 const PoeProvider: React.FunctionComponent = ({ children }) => {
   const availableLeagues = useAvailableLeagues();
-  const stats = useStats();
-  const modService = new ModService(stats);
+  const poeStats = useStats();
+  const stats = new ModService(poeStats);
   const [selectedLeague, setSelectedLeague] = usePersistedState<
     LeagueData | string
   >(selectedLeagueKey, availableLeagues![0] || "");
 
   return (
     <PoeContext.Provider
-      value={{ availableLeagues, selectedLeague, setSelectedLeague, modService }}
+      value={{ availableLeagues, selectedLeague, setSelectedLeague, stats }}
     >
       {children}
     </PoeContext.Provider>
