@@ -1,69 +1,27 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
 
 import ItemSlot from "./item-slot";
 import WeaponSlot from "./weapon-slot";
 import FlasksSlot from "./flasks-slot";
 import { PoeItem, PoeCharacterEquipment } from "../../poe-content";
+import {
+  Doll,
+  WeaponSlot1,
+  WeaponSlot2,
+  Amulet,
+  Ring1,
+  Ring2,
+  Helm,
+  BodyArmour,
+  Belt,
+  Gloves,
+  Boots,
+  Flasks
+} from "./character-doll.components";
 
 export interface CharacterDollProps extends PoeCharacterEquipment {
   onItemSelected: (item: PoeItem) => void;
 }
-
-const Doll = styled.div`
-  border: 5px black solid;
-  padding: 5px;
-  grid-column: 1;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-`;
-
-const Amulet = styled.div`
-  grid-column: 4;
-  grid-row: 2;
-`;
-
-const Belt = styled.div`
-  grid-column: 3;
-  grid-row: 4;
-`;
-const BodyArmour = styled.div`
-  grid-column: 3;
-  grid-row: 2 / 4;
-`;
-const Boots = styled.div`
-  grid-column: 4;
-  grid-row: 4 / 6;
-`;
-const Flasks = styled.div`
-  grid-column: 3 / 5;
-  grid-row: 5;
-`;
-const Gloves = styled.div`
-  grid-column: 2;
-  grid-row: 4 / 6;
-`;
-const Helm = styled.div`
-  grid-column: 3;
-  grid-row: 1;
-`;
-const Ring1 = styled.div`
-  grid-column: 2;
-  grid-row: 3;
-`;
-const Ring2 = styled.div`
-  grid-column: 4;
-  grid-row: 3;
-`;
-const WeaponSlot1 = styled.div`
-  grid-column: 1;
-  grid-row: 1 / 6;
-`;
-const WeaponSlot2 = styled.div`
-  grid-column: 5;
-  grid-row: 1 / 6;
-`;
 
 const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
   const [activeSet, setActiveSet] = useState<1 | 2>(1);

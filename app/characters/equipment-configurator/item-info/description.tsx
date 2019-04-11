@@ -15,6 +15,9 @@ const Category: React.FunctionComponent<{ categories: any }> = ({
   </div>
 );
 
+const ItemName = styled.h1``;
+const TypeLine = styled.h2``;
+
 const Description: React.FunctionComponent<{
   icon: any;
   name: any;
@@ -26,8 +29,8 @@ const Description: React.FunctionComponent<{
     <picture onClick={() => console.log(item)}>
       <img src={icon} />
     </picture>
-    {name && <span>{name}</span>}
-    <div>{typeLine}</div>
+    {name && <ItemName>{name}</ItemName>}
+    <TypeLine>{typeLine}</TypeLine>
     <Category categories={category} />
     <div>flavor text here ?</div>
   </Container>

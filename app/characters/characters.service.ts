@@ -18,3 +18,4 @@ const useCharactersService = (sessionId: string): [PoeCharacter[]] => {
 };
 
 export default useCharactersService;
+
