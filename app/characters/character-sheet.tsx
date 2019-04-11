@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useReducer, useContext, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import useEquipmentService from "./equipment.service";
 import CharacterDoll from "./character-doll";
 import EquipmentConfigurator from "./equipment-configurator";
-import { PoeCharacter, PoeItem } from "../poe-content";
+import { PoeCharacter, PoeItem, ItemModSearch } from "../poe-content";
+import { ItemSearchActionTypes } from "./character.models";
+import { CharacterContext } from "./character.provider";
 
 const Sheet = styled.div`
   display: grid;
@@ -22,30 +24,68 @@ const Content = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
-const Equipment = styled.div`
-  background: rgba(0, 0, 0, 0.14);
-  grid-column: 2;
-`;
-
-const CharacterDetails = ({ name }: PoeCharacter) => <h1>{name}</h1>;
+const CharacterDetails = ({ name }: PoeCharacter) => (
+  <Header>
+    <h1>{name}</h1>
+  </Header>
+);
 
 const CharacterSheet: React.FunctionComponent<RouteComponentProps> = ({
   match: { params }
 }) => {
-  const { name } = params as any; //TODO: know its there figure out how to set up interfaces
-  const [selectedItem, setSelectedItem] = useState<PoeItem | null>(null);
-  const [character, equipment] = useEquipmentService(name);
+  const { name } = params as any; //TODO: figure out how to set up interfaces for params
+  const { setCharacter, character: charName } = useContext(CharacterContext);
+  useEffect(() => {
+    setCharacter(name);
+  }, [name]);
 
+  console.log(charName);
+  const [selectedItem, setSelectedItem] = useState<PoeItem | undefined>(
+    undefined
+  );
+  const [character, equipment] = useEquipmentService(name);
+  const [mods, dispatch] = useReducer(
+    (
+      state: ItemModSearch[],
+      { type, payload }: { type: ItemSearchActionTypes; payload?: any }
+    ) => {
+      switch (type) {
+        case ItemSearchActionTypes.Add:
+          if (!payload) {
+            return state;
+          }
+
+          return state.indexOf(payload.mod) === -1
+            ? [...state, payload]
+            : state;
+        case ItemSearchActionTypes.Change:
+          return state.map(item => {
+            if (item.id === payload.id) {
+              return { ...item, value: payload.value };
+            }
+
+            return item;
+          });
+        case ItemSearchActionTypes.Remove:
+          return state.filter(item => item.id !== payload.id);
+        case ItemSearchActionTypes.Clear:
+          return [];
+        default:
+          return state;
+      }
+    },
+    []
+  );
   return (
     <Sheet>
-      <Header>
-        <CharacterDetails {...character} />
-      </Header>
+      <CharacterDetails {...character} />
       <Content>
         <CharacterDoll {...equipment} onItemSelected={setSelectedItem} />
-        <Equipment>
-          {selectedItem && <EquipmentConfigurator item={selectedItem} />}
-        </Equipment>
+        <EquipmentConfigurator
+          item={selectedItem}
+          mods={mods}
+          dispatch={dispatch}
+        />
       </Content>
     </Sheet>
   );

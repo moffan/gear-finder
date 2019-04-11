@@ -2,16 +2,21 @@ import React, { useContext, useEffect } from "react";
 import styled from "@emotion/styled";
 
 import { IconButton } from "../../../components";
-import { PoeContext, ItemModSearch } from "../../../poe-content";
+import {
+  PoeContext,
+  ItemModSearch,
+  ItemMod,
+  StatType
+} from "../../../poe-content";
 
 export interface ModsProps {
-  implicitMods: any;
-  explicitMods: any;
+  implicitMods: string[];
+  explicitMods: string[];
   onClick: (mod: ItemModSearch) => void;
 }
 
 interface ModLineProps {
-  mod: string;
+  mod: ItemMod;
   onClick: (mod: ItemModSearch) => void;
 }
 
@@ -32,14 +37,19 @@ const ModLine: React.FunctionComponent<ModLineProps> = ({ mod, onClick }) => {
     <ModLines>
       <IconButton
         icon="add_circle"
-        onClick={() => onClick(modService.find(mod))}
+        onClick={() => {
+          const search = modService.find(mod);
+          if (!!search) {
+            onClick(search);
+          }
+        }}
       />
-      {mod}
+      {mod.text}
     </ModLines>
   );
 };
 
-const Mods: React.FunctionComponent<any> = ({
+const Mods: React.FunctionComponent<ModsProps> = ({
   implicitMods,
   explicitMods,
   onClick
@@ -48,18 +58,20 @@ const Mods: React.FunctionComponent<any> = ({
     {implicitMods && (
       <>
         <h1>Implicit</h1>
-        {implicitMods.map((mod: any, index: number) => (
-          <ModLine key={index} mod={mod} onClick={onClick} />
-        ))}
+        {implicitMods.map((text: string, index: number) => {
+          const itemMod: ItemMod = { type: StatType.Implicit, text };
+          return <ModLine key={index} mod={itemMod} onClick={onClick} />;
+        })}
       </>
     )}
 
     {explicitMods && (
       <>
         <h1>Explicit</h1>
-        {explicitMods.map((mod: any, index: number) => (
-          <ModLine key={index} mod={mod} onClick={onClick} />
-        ))}
+        {explicitMods.map((text: string, index: number) => {
+          const itemMod: ItemMod = { type: StatType.Explicit, text };
+          return <ModLine key={index} mod={itemMod} onClick={onClick} />;
+        })}
       </>
     )}
   </Container>
