@@ -31,14 +31,14 @@ const ModLines = styled.div`
 `;
 
 const ModLine: React.FunctionComponent<ModLineProps> = ({ mod, onClick }) => {
-  const { modService } = useContext(PoeContext);
+  const { stats } = useContext(PoeContext);
 
   return (
     <ModLines>
       <IconButton
         icon="add_circle"
         onClick={() => {
-          const search = modService.find(mod);
+          const search = stats.find(mod);
           if (!!search) {
             onClick(search);
           }

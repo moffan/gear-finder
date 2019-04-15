@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { RouteComponentProps } from "react-router";
 
 import { useUserService } from "../user";
-import useCharactersService from "./characters.service";
 import { PoeContext, PoeCharacter } from "../poe-content";
 import { Card, CardHeader, CardActions, IconButton } from "../components";
+import { useCharacterListService } from "./characters.hooks";
+import { CharacterContext } from "./provider";
 
 const CharacterListItem: React.FunctionComponent<
   PoeCharacter & { onSelect: (character: PoeCharacter) => void }
@@ -27,16 +27,11 @@ const CharacterListItem: React.FunctionComponent<
   );
 };
 
-const CharacterList: React.FunctionComponent<RouteComponentProps> = ({
-  history
-}) => {
+const CharacterList: React.FunctionComponent = () => {
   const [{ sessionId }] = useUserService();
-  const [characters] = useCharactersService(sessionId);
-  const { selectedLeague } = useContext(PoeContext);
+  const [characters] = useCharacterListService(sessionId);
+  const { selectedLeague, setActiveCharacter } = useContext(PoeContext);
 
-  const goto = (character: PoeCharacter) => {
-    history.push(`/character/${character.name}`);
-  };
   return (
     <>
       {characters
@@ -45,7 +40,11 @@ const CharacterList: React.FunctionComponent<RouteComponentProps> = ({
         )
         .map((character: PoeCharacter, index: number) => {
           return (
-            <CharacterListItem key={index} {...character} onSelect={goto} />
+            <CharacterListItem
+              key={index}
+              {...character}
+              onSelect={setActiveCharacter}
+            />
           );
         })}
     </>

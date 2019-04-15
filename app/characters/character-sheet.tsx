@@ -1,13 +1,11 @@
-import React, { useState, useReducer, useContext, useEffect } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import styled from "@emotion/styled";
 
-import useEquipmentService from "./equipment.service";
 import CharacterDoll from "./character-doll";
 import EquipmentConfigurator from "./equipment-configurator";
-import { PoeCharacter, PoeItem, ItemModSearch } from "../poe-content";
-import { ItemSearchActionTypes } from "./character.models";
-import { CharacterContext } from "./character.provider";
+import { PoeCharacter, PoeItem } from "../poe-content";
+import { CharacterContext, CharacterProvider } from "./provider";
+import { RouteComponentProps } from "react-router";
 
 const Sheet = styled.div`
   display: grid;
@@ -30,52 +28,15 @@ const CharacterDetails = ({ name }: PoeCharacter) => (
   </Header>
 );
 
-const CharacterSheet: React.FunctionComponent<RouteComponentProps> = ({
-  match: { params }
-}) => {
-  const { name } = params as any; //TODO: figure out how to set up interfaces for params
-  const { setCharacter, character: charName } = useContext(CharacterContext);
-  useEffect(() => {
-    setCharacter(name);
-  }, [name]);
-
-  console.log(charName);
+const CharacterSheet: React.FunctionComponent = () => {
   const [selectedItem, setSelectedItem] = useState<PoeItem | undefined>(
     undefined
   );
-  const [character, equipment] = useEquipmentService(name);
-  const [mods, dispatch] = useReducer(
-    (
-      state: ItemModSearch[],
-      { type, payload }: { type: ItemSearchActionTypes; payload?: any }
-    ) => {
-      switch (type) {
-        case ItemSearchActionTypes.Add:
-          if (!payload) {
-            return state;
-          }
 
-          return state.indexOf(payload.mod) === -1
-            ? [...state, payload]
-            : state;
-        case ItemSearchActionTypes.Change:
-          return state.map(item => {
-            if (item.id === payload.id) {
-              return { ...item, value: payload.value };
-            }
-
-            return item;
-          });
-        case ItemSearchActionTypes.Remove:
-          return state.filter(item => item.id !== payload.id);
-        case ItemSearchActionTypes.Clear:
-          return [];
-        default:
-          return state;
-      }
-    },
-    []
+  const { character, equipment, mods, modsDispatcher } = useContext(
+    CharacterContext
   );
+
   return (
     <Sheet>
       <CharacterDetails {...character} />
@@ -84,7 +45,7 @@ const CharacterSheet: React.FunctionComponent<RouteComponentProps> = ({
         <EquipmentConfigurator
           item={selectedItem}
           mods={mods}
-          dispatch={dispatch}
+          dispatch={modsDispatcher}
         />
       </Content>
     </Sheet>
