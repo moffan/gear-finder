@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const usePersistedState = <T>(
   key: string,
-  defaultValue: T
+  defaultValue?: T
 ): [T, (value: T) => void] => {
   const storedValue = localStorage.getItem(key);
 
