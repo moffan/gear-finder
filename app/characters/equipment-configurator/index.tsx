@@ -23,7 +23,7 @@ const EquipmentConfigurator: React.FunctionComponent<
   EquipmentConfiguratorProps
 > = ({ item, mods, dispatch }) => {
   useEffect(() => {
-    if (!!mods.length) {
+    if (mods && !!mods.length) {
       dispatch({ type: ItemSearchActionTypes.Clear });
     }
   }, [item]);
