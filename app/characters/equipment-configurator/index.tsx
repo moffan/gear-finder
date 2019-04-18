@@ -1,14 +1,14 @@
-import React, { useEffect, Dispatch } from "react";
+import React, { Dispatch } from "react";
 import styled from "@emotion/styled";
 
 import ItemInfo from "./item-info/item-info";
-import ItemFilter from "./item-filter/item-filter";
+import ItemFilter from "./item-filter";
 import { PoeItem, ItemModSearch } from "../../poe-content";
 import { ItemSearchAction, ItemSearchActionTypes } from "../character.models";
 
-export interface EquipmentConfiguratorProps {
+interface EquipmentConfiguratorProps {
   item?: PoeItem;
-  mods: any;
+  filters: ItemModSearch[];
   dispatch: Dispatch<ItemSearchAction>;
 }
 
@@ -21,14 +21,13 @@ const Container = styled.div`
 
 const EquipmentConfigurator: React.FunctionComponent<
   EquipmentConfiguratorProps
-> = ({ item, mods, dispatch }) => {
-  useEffect(() => {
-    if (mods && !!mods.length) {
-      dispatch({ type: ItemSearchActionTypes.Clear });
-    }
-  }, [item]);
+> = ({ item, filters, dispatch }) => {
+  if (!item) {
+    return null;
+  }
 
-  return item ? (
+
+  return (
     <Container>
       <ItemInfo
         item={item}
@@ -40,7 +39,7 @@ const EquipmentConfigurator: React.FunctionComponent<
         }
       />
       <ItemFilter
-        mods={mods}
+        filters={filters}
         onChange={payload =>
           dispatch({
             type: ItemSearchActionTypes.Change,
@@ -55,7 +54,7 @@ const EquipmentConfigurator: React.FunctionComponent<
         }
       />
     </Container>
-  ) : null;
+  );
 };
 
 export default EquipmentConfigurator;

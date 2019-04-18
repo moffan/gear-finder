@@ -1,7 +1,8 @@
 import {
   PoeCharacter,
   PoeCharacterEquipment,
-  ItemModSearch
+  ItemModSearch,
+  PoeItem
 } from "../poe-content";
 import { PoeGetItemsResponse, InventoryIds } from "./character.models";
 import { usePersistedState, apiService, decodeItem } from "../common";
@@ -11,11 +12,11 @@ import { useUserService } from "../user";
 interface CharacterDetails {
   character: PoeCharacter;
   equipment: PoeCharacterEquipment;
-  mods: ItemModSearch[];
+  filters: { [inventoryId: string]: ItemModSearch[] };
 }
 
 export interface CharacterService extends CharacterDetails {
-  updateMods: (mods: ItemModSearch[]) => void;
+  updateFilters: (item: PoeItem, mods: ItemModSearch[]) => void;
 }
 
 export const useCharacterService = (
@@ -26,9 +27,10 @@ export const useCharacterService = (
   }
 
   const [{ sessionId, username: accountName }] = useUserService();
-  const [{ character, equipment, mods }, setCharacterInfo] = usePersistedState<
-    CharacterDetails
-  >(characterName);
+  const [
+    { character, equipment, filters },
+    setCharacterInfo
+  ] = usePersistedState<CharacterDetails>(characterName);
 
   if (!character) {
     apiService
@@ -46,7 +48,7 @@ export const useCharacterService = (
             : (equipment[item.inventoryId] = decodeItem(item))
         );
 
-        setCharacterInfo({ character, equipment, mods: [] });
+        setCharacterInfo({ character, equipment, filters: {} });
       })
       .catch(err => console.error(err));
   }
@@ -54,8 +56,14 @@ export const useCharacterService = (
   return {
     character,
     equipment,
-    mods,
-    updateMods: mods => setCharacterInfo({ character, equipment, mods })
+    filters,
+    updateFilters: ({ inventoryId }, newFilters) => {
+      setCharacterInfo({
+        character,
+        equipment,
+        filters: { ...filters, [inventoryId]: newFilters }
+      });
+    }
   };
 };
 

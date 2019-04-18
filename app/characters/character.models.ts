@@ -4,7 +4,7 @@ export enum ItemSearchActionTypes {
   Add = "ADD",
   Change = "CHANGE",
   Remove = "REMOVE",
-  Clear = "CLEAR"
+  Set = "SET"
 }
 
 export interface ItemSearchAction {

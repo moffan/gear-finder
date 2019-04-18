@@ -1,11 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 
 import CharacterDoll from "./character-doll";
 import EquipmentConfigurator from "./equipment-configurator";
-import { PoeCharacter, PoeItem } from "../poe-content";
-import { CharacterContext, CharacterProvider } from "./provider";
-import { RouteComponentProps } from "react-router";
+import { PoeCharacter } from "../poe-content";
+import { CharacterContext } from "./provider";
 
 const Sheet = styled.div`
   display: grid;
@@ -29,13 +28,14 @@ const CharacterDetails = ({ name }: PoeCharacter) => (
 );
 
 const CharacterSheet: React.FunctionComponent = () => {
-  const [selectedItem, setSelectedItem] = useState<PoeItem | undefined>(
-    undefined
-  );
-
-  const { character, equipment, mods, modsDispatcher } = useContext(
-    CharacterContext
-  );
+  const {
+    character,
+    equipment,
+    filters,
+    filterDispatcher,
+    selectedItem,
+    setSelectedItem
+  } = useContext(CharacterContext);
 
   return (
     <Sheet>
@@ -44,8 +44,8 @@ const CharacterSheet: React.FunctionComponent = () => {
         <CharacterDoll {...equipment} onItemSelected={setSelectedItem} />
         <EquipmentConfigurator
           item={selectedItem}
-          mods={mods}
-          dispatch={modsDispatcher}
+          filters={filters}
+          dispatch={filterDispatcher}
         />
       </Content>
     </Sheet>
