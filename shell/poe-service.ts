@@ -91,6 +91,49 @@ ipcMain.on(
   }
 );
 
+ipcMain.on(
+  PoeRequests.ItemSearch,
+  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest) => {
+    const { item, filters, league } = payload;
+
+    const searchOptions = {
+      query: {
+        status: {
+          option: "online"
+        },
+        name: "The Pariah",
+        type: "Unset Ring",
+        stats: [
+          {
+            type: "and",
+            filters: []
+          }
+        ]
+      },
+      sort: {
+        price: "asc"
+      }
+    };
+
+    fetch(`https://www.pathofexile.com/api/trade/search/${league}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(searchOptions)
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        throw new Error(res.status.toString());
+      })
+      .then(console.log)
+      .catch(console.error);
+  }
+);
+
 const poeFetch = (
   url: string,
   sessionId: string,

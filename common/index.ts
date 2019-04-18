@@ -8,7 +8,8 @@ export enum PoeRequests {
   CharacterList = "POE_CHARACTER_LIST",
   Character = "POE_CHARACTER",
   CurrentLeagues = "POE_LEAGUES_CURRENT",
-  Stats = "POE_STATS"
+  Stats = "POE_STATS",
+  ItemSearch = "POE_ITEM_SEARCH"
 }
 
 export interface IpcRequest {
