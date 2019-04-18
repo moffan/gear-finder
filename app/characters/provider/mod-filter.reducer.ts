@@ -26,8 +26,8 @@ const modFilterReducer: ModFilterReducer = (
       });
     case ItemSearchActionTypes.Remove:
       return state.filter(item => item.id !== payload.id);
-    case ItemSearchActionTypes.Clear:
-      return [];
+    case ItemSearchActionTypes.Set:
+      return payload;
     default:
       return state;
   }
