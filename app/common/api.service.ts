@@ -1,16 +1,16 @@
 import { ipcRenderer } from "electron";
-import { IpcRequest, UUID } from "../../common";
+import { IpcRequest, UUID, PoeRequests } from "../../common";
 
 const apiService = {
-  send<T>(channel: string, payload: any = null): Promise<T> {
-    const requestId = `${channel}_${UUID()}`;
+  send<T>(request: PoeRequests, payload: any = null): Promise<T> {
+    const requestId = `${request}_${UUID()}`;
     const options: IpcRequest = {
       onSuccess: `${requestId}_SUCCESS`,
       onError: `${requestId}_ERROR`,
       payload
     };
 
-    ipcRenderer.send(channel, options);
+    ipcRenderer.send(request, options);
 
     return new Promise((resolve, reject) => {
       ipcRenderer.once(options.onSuccess, (_: any, response: any) => {
