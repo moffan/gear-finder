@@ -11,7 +11,7 @@ export const POE_LOGIN_STEAM_URL = "https://www.pathofexile.com/login/steam";
 export const POE_MY_ACCOUNT_URL = "https://www.pathofexile.com/my-account";
 export const POE_GET_CHARACTERS_URL =
   "https://www.pathofexile.com/character-window/get-characters";
-export const POE_STASH_ITEMS_URL = `https://www.pathofexile.com/character-window/get-stash-items`;
+export const POE_URL_STASH_ITEMS = `https://www.pathofexile.com/character-window/get-stash-items`;
 export const POE_LEAGUE_LIST_URL =
   "http://api.pathofexile.com/leagues?type=main&compact=1";
 
