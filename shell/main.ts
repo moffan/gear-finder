@@ -6,6 +6,11 @@ import * as path from "path";
 import * as url from "url";
 import { Channels } from "../common";
 
+import "./search";
+import "./trade";
+import "./poe-ninja";
+import "./character-window";
+
 let mainWindow: BrowserWindow | null;
 
 // Keep a reference for dev mode
