@@ -1,11 +1,9 @@
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
-import * as path from "path";
-import * as url from "url";
 import installExtension, {
   REACT_DEVELOPER_TOOLS
 } from "electron-devtools-installer";
-
-import "./poe-service";
+import * as path from "path";
+import * as url from "url";
 import { Channels } from "../common";
 
 let mainWindow: BrowserWindow | null;
@@ -13,7 +11,7 @@ let mainWindow: BrowserWindow | null;
 // Keep a reference for dev mode
 let isDevMode = false;
 if (
-  process.env["NODE_ENV"] === "development" ||
+  process.env.NODE_ENV === "development" ||
   process.defaultApp ||
   /[\\/]electron-prebuilt[\\/]/.test(process.execPath) ||
   /[\\/]electron[\\/]/.test(process.execPath)
@@ -21,17 +19,17 @@ if (
   isDevMode = true;
 }
 
-process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = `${isDevMode}`;
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = `${isDevMode}`;
 
 const createWindow = () => {
   const windowOptions: BrowserWindowConstructorOptions = {
-    height: 768,
-    width: 1366,
-    show: false,
     frame: isDevMode,
+    height: 768,
+    show: false,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    width: 1366
   };
 
   mainWindow = new BrowserWindow(windowOptions);
@@ -74,11 +72,14 @@ app.on("ready", () => {
     return Promise.all([installExtension(REACT_DEVELOPER_TOOLS)])
       .then(names => {
         for (const name of names) {
-          console.log(`Added Extension:  ${name}`);
+          // tslint:disable-next-line: no-console
+          console.log("Added Extension: ", name);
         }
+
         createWindow();
       })
       .catch(err => {
+        // tslint:disable-next-line: no-console
         console.log("An error occurred: ", err);
       });
   }
