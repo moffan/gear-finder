@@ -1,15 +1,11 @@
-import { PoeStats, PoeStat, ItemModSearch, StatType, ItemMod } from ".";
+import { ItemMod, ItemModSearch, PoeStat, PoeStats, StatType } from ".";
 
-class ModService {
+export class ModService {
+  private readonly statsMap: Map<StatType, PoeStat[]>;
   constructor(stats: PoeStats[]) {
     this.statsMap = new Map();
     stats.forEach(stat => this.statsMap.set(stat.label, stat.entries));
   }
-
-  private getRegex = ({ text }: PoeStat): string =>
-    text.replace(/([\+\-\*\?])/, "\\$1").replace(/#/g, "(\\d+)");
-
-  private readonly statsMap: Map<StatType, PoeStat[]>;
 
   public find = (mod: ItemMod): ItemModSearch | null => {
     const { type, text } = mod;
@@ -23,7 +19,7 @@ class ModService {
           const values = result.slice(1);
           const value = Math.ceil(
             values
-              .map(value => parseInt(value))
+              .map(currentValue => parseInt(currentValue, 10))
               .reduce((prev, curr) => prev + curr) / values.length
           );
           const itemSearch: ItemModSearch = {
@@ -41,9 +37,11 @@ class ModService {
     }
 
     const error = `Could not find a ${mod.type} stat "${mod.text}"`;
-    console.debug(error);
+    // tslint:disable-next-line: no-console
+    console.error(error);
     return null;
   };
-}
 
-export default ModService;
+  private getRegex = ({ text }: PoeStat): string =>
+    text.replace(/([\+\-\*\?])/, "\\$1").replace(/#/g, "(\\d+)");
+}
