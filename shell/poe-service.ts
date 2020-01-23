@@ -1,12 +1,11 @@
 import { ipcMain, WebContents } from "electron";
-import { URLSearchParams } from "url";
 import fetch from "node-fetch";
-
-import { PoeRequests, IpcRequest, IpcEvent } from "../common";
+import { URLSearchParams } from "url";
+import { IpcEvent, IpcRequest, PoeRequests } from "../common";
 
 ipcMain.on(
   PoeRequests.Character,
-  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest) => {
+  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
     const { sessionId, character, accountName } = payload;
 
     if (!character || !accountName || !sessionId) {
@@ -21,11 +20,11 @@ ipcMain.on(
     params.append("accountName", accountName);
 
     fetch("https://www.pathofexile.com/character-window/get-items", {
+      body: params,
       headers: {
         Cookie: `POESESSID=${sessionId}`
       },
-      method: "POST",
-      body: params
+      method: "POST"
     })
       .then(res => {
         if (res.ok) {
@@ -51,7 +50,7 @@ ipcMain.on(
 
 ipcMain.on(
   PoeRequests.CharacterList,
-  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest) => {
+  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
     const { sessionId } = payload;
     poeFetch(
       "https://www.pathofexile.com/character-window/get-characters",
@@ -65,7 +64,7 @@ ipcMain.on(
 
 ipcMain.on(
   PoeRequests.CurrentLeagues,
-  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest) => {
+  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
     const { sessionId } = payload;
     poeFetch(
       "https://www.pathofexile.com/api/trade/data/leagues",
@@ -79,7 +78,7 @@ ipcMain.on(
 
 ipcMain.on(
   PoeRequests.Stats,
-  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest) => {
+  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
     const { sessionId } = payload;
     poeFetch(
       "https://www.pathofexile.com/api/trade/data/stats",
@@ -93,22 +92,22 @@ ipcMain.on(
 
 ipcMain.on(
   PoeRequests.ItemSearch,
-  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest) => {
+  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
     const { item, filters, league } = payload;
 
     const searchOptions = {
       query: {
+        name: "The Pariah",
+        stats: [
+          {
+            filters: [],
+            type: "and"
+          }
+        ],
         status: {
           option: "online"
         },
-        name: "The Pariah",
-        type: "Unset Ring",
-        stats: [
-          {
-            type: "and",
-            filters: []
-          }
-        ]
+        type: "Unset Ring"
       },
       sort: {
         price: "asc"
@@ -116,11 +115,11 @@ ipcMain.on(
     };
 
     fetch(`https://www.pathofexile.com/api/trade/search/${league}`, {
-      method: "POST",
+      body: JSON.stringify(searchOptions),
       headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify(searchOptions)
+      method: "POST"
     })
       .then(res => {
         if (res.ok) {
@@ -129,7 +128,9 @@ ipcMain.on(
 
         throw new Error(res.status.toString());
       })
+      // tslint:disable-next-line: no-console
       .then(console.log)
+      // tslint:disable-next-line: no-console
       .catch(console.error);
   }
 );
