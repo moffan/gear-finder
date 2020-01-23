@@ -1,32 +1,18 @@
-const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack");
-
-const paths = {
-  output: path.resolve(__dirname, "..", "lib"),
-  source: path.resolve(__dirname),
-  common: path.resolve(__dirname, "..", "common"),
-  node_modules: path.resolve(__dirname, "..", "node_modules"),
-  htmlTemplate: path.resolve(__dirname, "..", "index.html"),
-  babelConfig: path.join(__dirname, ".babelrc")
-};
+const path = require("path");
 
 module.exports = {
   mode: "development",
-  context: paths.source,
+  context: path.resolve(__dirname),
+  entry: path.resolve(__dirname, "index.tsx"),
   target: "electron-renderer",
-  entry: {
-    app: "./index.tsx"
-  },
-  output: {
-    filename: "[name].js",
-    path: paths.output
-  },
   devtool: "source-map",
+  output: {
+    path: path.resolve(__dirname, "../.lib/app"),
+    publicPath: "/"
+  },
   devServer: {
-    contentBase: paths.output,
-    compress: true,
-    hot: true
+    historyApiFallback: true
   },
   module: {
     rules: [
@@ -34,18 +20,13 @@ module.exports = {
         test: /\.tsx?$/,
         loader: "babel-loader",
         options: {
-          extends: paths.babelConfig
+          extends: path.join(__dirname, "/.babelrc")
         }
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: paths.htmlTemplate
-    }),
-    new webpack.HotModuleReplacementPlugin()
-  ],
   resolve: {
-    extensions: [".ts", ".js", ".tsx"]
-  }
+    extensions: [".tsx", ".ts", ".js"]
+  },
+  plugins: [new HtmlWebpackPlugin()]
 };

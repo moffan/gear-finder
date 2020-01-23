@@ -1,16 +1,19 @@
 {
-  "name": "shell",
+  "name": "poe-gear-finder-shell",
   "version": "0.0.0",
   "license": "ISC",
   "scripts": {
-    "build": "tsc --pretty"
+    "build": "tsc"
   },
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.2.0",
-    "@types/node-fetch": "^2.3.2",
-    "electron": "^4.1.4",
-    "electron-devtools-installer": "^2.2.4",
-    "node-fetch": "^2.3.0",
-    "typescript": "^3.4.3"
+    "@types/electron-devtools-installer": "2.2.0",
+    "@types/node": "13.1.8",
+    "@types/node-fetch": "2.5.4",
+    "electron": "7.1.9",
+    "electron-devtools-installer": "2.2.4",
+    "typescript": "3.7.5"
+  },
+  "dependencies": {
+    "node-fetch": "2.6.0"
   }
 }

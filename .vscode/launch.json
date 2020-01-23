@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Main Process",
+      "name": "Build & Debug Main Process",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceRoot}",
@@ -11,6 +11,18 @@
         "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
       },
       "preLaunchTask": "build:shell",
+      "args": ["."],
+      "outputCapture": "std"
+    },
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      "windows": {
+        "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd"
+      },
       "args": ["."],
       "outputCapture": "std"
     }

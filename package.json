@@ -2,15 +2,17 @@
   "name": "poe-gear-finder",
   "private": true,
   "version": "0.0.0",
-  "main": "lib/shell/main.js",
+  "main": ".lib/shell/main.js",
   "license": "ISC",
   "scripts": {
     "start": "webpack-dev-server --config ./app/webpack.config.js",
     "build": "yarn workspaces run build",
-    "build:shell": "tsc --pretty -p ./shell"
+    "build:shell": "tsc --pretty -p ./shell",
+    "clean":"rimraf **/node_modules **/lib"
   },
   "workspaces": [
     "app",
+    "common",
     "shell"
   ]
 }
