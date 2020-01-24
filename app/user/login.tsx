@@ -5,11 +5,10 @@ import React, {
   useState
 } from "react";
 import { CurrentLeagues, PoeRequests } from "../../common";
-import apiService from "../utils/api.service";
 import { UserContext } from "./user.context";
 
 export const Login: FunctionComponent = () => {
-  const { login } = useContext(UserContext);
+  const { login, api } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [activeLeague, setActiveLeague] = useState("");
@@ -17,7 +16,7 @@ export const Login: FunctionComponent = () => {
 
   useEffect(() => {
     const getCurrentLeauges = async () => {
-      const leagues = await apiService.send<CurrentLeagues>(
+      const leagues = await api.send<CurrentLeagues>(
         PoeRequests.CurrentLeagues
       );
 
