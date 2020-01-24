@@ -1,10 +1,14 @@
 import { ipcRenderer } from "electron";
 import { IpcRequest, PoeRequests, UUID } from "../../common";
 
-const apiService = {
-  send<T>(request: PoeRequests, payload: any = null): Promise<T> {
+export interface ApiService {
+  send<T>(request: PoeRequests, payload?: any): Promise<T>;
+}
+
+export const apiService: ApiService = {
+  send<T>(request: PoeRequests, payload: any): Promise<T> {
     const requestId = `${request}_${UUID()}`;
-    const options: IpcRequest = {
+    const options: IpcRequest<T> = {
       onError: `${requestId}_ERROR`,
       onSuccess: `${requestId}_SUCCESS`,
       payload
@@ -22,5 +26,3 @@ const apiService = {
     });
   }
 };
-
-export default apiService;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const usePersistedState = <T>(
+export const usePersistedState = <T>(
   key: string,
   defaultValue?: T
 ): [T, (value: T) => void] => {
@@ -18,5 +18,3 @@ const usePersistedState = <T>(
     }
   ];
 };
-
-export default usePersistedState;
