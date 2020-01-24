@@ -12,6 +12,42 @@ interface PoeCurrencyItem {
   chaosValue?: number;
 }
 
+const useCurrency = () => {
+  const { api } = useContext(UserContext);
+  const [currency, setCurrency] = useState<PoeCurrencyItem[]>([]);
+
+  useEffect(() => {
+    const getCurrencyInfo = async () => {
+      const currencyData = await api.send<CurrencyLine[]>(PoeRequests.Currency);
+
+      const { items } = await api.send<{ items: PoeCurrencyItem[] }>(
+        PoeRequests.Stash
+      );
+
+      setCurrency(
+        items.map(item => {
+          const [value] = currencyData.filter(
+            cd => cd.currencyTypeName === item.typeLine
+          );
+
+          if (!!value) {
+            const { chaosEquivalent } = value;
+            item.chaosValue = chaosEquivalent * item.stackSize;
+          }
+
+          return item;
+        })
+      );
+    };
+
+    getCurrencyInfo();
+  }, []);
+
+  return {
+    currency
+  };
+};
+
 const CurrencyList: FunctionComponent<{ currency: PoeCurrencyItem[] }> = ({
   currency
 }) => (
@@ -34,7 +70,7 @@ const TotalChaos: FunctionComponent<{ currency: PoeCurrencyItem[] }> = ({
   currency
 }) => (
   <span>
-    Total Chaos:{" "}
+    Total Chaos:
     {currency.length > 0 &&
       currency
         .map(item => (item.chaosValue ? item.chaosValue : 0))
@@ -43,45 +79,7 @@ const TotalChaos: FunctionComponent<{ currency: PoeCurrencyItem[] }> = ({
 );
 
 export const Currency = () => {
-  const [currency, setCurrency] = useState<PoeCurrencyItem[]>([]);
-
-  const { accountName, poesessid, league } = useContext(UserContext);
-
-  useEffect(() => {
-    const getCurrencyInfo = async () => {
-      const currencyData = await apiService.send<CurrencyLine[]>(
-        PoeRequests.Currency
-      );
-
-      // setCurrencyInfo(currencyData);
-
-      const { items } = await apiService.send<{ items: PoeCurrencyItem[] }>(
-        PoeRequests.Stash,
-        {
-          accountName,
-          poesessid,
-          league
-        }
-      );
-
-      setCurrency(
-        items.map(item => {
-          const [value] = currencyData.filter(
-            cd => cd.currencyTypeName === item.typeLine
-          );
-
-          if (!!value) {
-            const { chaosEquivalent } = value;
-            item.chaosValue = chaosEquivalent * item.stackSize;
-          }
-
-          return item;
-        })
-      );
-    };
-
-    getCurrencyInfo();
-  }, []);
+  const { currency } = useCurrency();
 
   return (
     <Page>
