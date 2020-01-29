@@ -1,9 +1,9 @@
-export interface SparkLine {
+export interface PoeNinjaSparkLine {
   data: number[];
   totalChange: number;
 }
 
-export interface CurrencyValueDetails {
+export interface PoeNinjaValueDetails {
   count: number;
   data_point_count: number;
   get_currency_id: number;
@@ -15,14 +15,14 @@ export interface CurrencyValueDetails {
   value: number;
 }
 
-export interface CurrencyLine {
+export interface PoeNinjaItemValue {
   chaosEquivalent: number;
   currencyTypeName: string;
   detailsId: string;
-  lowConfidencePaySparkLine: SparkLine;
-  lowConfidenceReceiveSparkLine: SparkLine;
-  pay: CurrencyValueDetails;
-  paySparkLine: SparkLine;
-  receive: CurrencyValueDetails;
-  receiveSparkLine: SparkLine;
+  lowConfidencePaySparkLine: PoeNinjaSparkLine;
+  lowConfidenceReceiveSparkLine: PoeNinjaSparkLine;
+  pay: PoeNinjaValueDetails;
+  paySparkLine: PoeNinjaSparkLine;
+  receive: PoeNinjaValueDetails;
+  receiveSparkLine: PoeNinjaSparkLine;
 }

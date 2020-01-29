@@ -1,6 +1,7 @@
 import { WebContents } from "electron";
 
 export * from "./poe-ninja.models";
+export * from "./character-window.models";
 
 export type CurrentLeagues = League[];
 
@@ -19,8 +20,10 @@ export enum PoeRequests {
   Exchange = "POE_EXCHANGE",
   ItemSearch = "POE_ITEM_SEARCH",
   Stats = "POE_STATS",
-  Currency = "POE_NINJA_CURRENCY",
-  Stash = "POE_STASH"
+  CurrencyValues = "POE_NINJA_CURRENCY",
+  StashTab = "POE_STASH_TAB",
+  StashTabs = "POE_STASH_TABS",
+  Credential = "POE_CREDENTIALS"
 }
 
 export enum Requests {}
