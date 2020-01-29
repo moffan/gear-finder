@@ -1,39 +1,39 @@
 import React from "react";
-import { HashRouter, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route, Link } from "react-router-dom";
 import {
   Aside,
   Container,
   Content,
   FooterBar,
   SideBar,
-  Header,
-  HomeLink
+  Header
 } from "./components";
-import { UserProvider } from "./user";
-import { CurrencyRoute, CurrencyLink } from "./currency";
+import { UserProvider, Settings } from "./user";
+import { Home } from "./home";
+import { Currency } from "./currency";
 
 const App = () => (
-  <UserProvider>
-    <HashRouter>
+  <HashRouter>
+    <UserProvider>
       <Container>
         <Header />
         <SideBar>
-          <HomeLink />
-          <CurrencyLink />
+          <Link to="/">Home</Link>
+          <Link to="/currency">Currency</Link>
+          <Link to="/settings">Settings</Link>
         </SideBar>
         <Content>
           <Switch>
-            <CurrencyRoute />
-            <Route exact path="/about">
-              <div>about</div>
-            </Route>
+            <Route path="/currency" component={Currency} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/" component={Home} />
           </Switch>
         </Content>
         <Aside>Aside</Aside>
         <FooterBar />
       </Container>
-    </HashRouter>
-  </UserProvider>
+    </UserProvider>
+  </HashRouter>
 );
 
 export default App;

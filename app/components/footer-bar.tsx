@@ -11,9 +11,9 @@ const Footer = styled.div`
 
 const Location = () => {
   const location = useLocation();
-
   return <div>Location: {location.pathname}</div>;
 };
+
 export const FooterBar = () => (
   <Footer>
     Footer

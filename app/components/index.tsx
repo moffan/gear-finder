@@ -1,11 +1,16 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import React from "react";
 
 export * from "./header";
 export * from "./footer-bar";
+export * from "./table";
+export * from "./inputs";
+export * from "./list";
 
-export const HomeLink = () => <NavLink to="/home">Home</NavLink>;
+export const ScrollViewer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+`;
 
 export const Container = styled.div`
   display: grid;
@@ -19,18 +24,6 @@ export const Container = styled.div`
   height: 98vh;
 `;
 
-export const List = styled.ul`
-  overflow: auto;
-`;
-
-export const ListItem = styled.li``;
-
-export const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-`;
-
 export const SideBar = styled.div`
   background-color: green;
   display: flex;
@@ -39,11 +32,13 @@ export const SideBar = styled.div`
 `;
 
 export const Content = styled.div`
-  display: flex;
   background-color: lightblue;
   grid-area: main;
   overflow: auto;
+  padding: 15px;
+  display: flex;
   flex-direction: column;
+  overflow: auto;
 `;
 
 export const Aside = styled.div`
