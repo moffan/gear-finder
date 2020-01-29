@@ -1,58 +1,9 @@
-import React, { FunctionComponent, useMemo } from "react";
+import React, { FunctionComponent } from "react";
 import { Table, Caption, Tbody, Tr, Td, Thead, Th } from "../components";
-import { useCurrency, usePoeNijaValues } from "../api/currency";
-import { useState } from "react";
+import { useCurrencyValues, PoeCurrencyItem } from "./currency-values.hook";
 
-interface PoeCurrencyItem {
-  name: string;
-  stackSize: number;
-  value: number;
-  totalValue: number;
-}
 
-const useCurrencyValues = () => {
-  const currency = useCurrency();
-  const values = usePoeNijaValues();
 
-  const [threshold] = useState<number>(25);
-
-  const pricedItems = useMemo(() => {
-    if (currency.length === 0 || values.length === 0) {
-      return [];
-    }
-
-    const items: PoeCurrencyItem[] = [];
-    values.forEach(valueItem => {
-      const { currencyTypeName, chaosEquivalent: value } = valueItem;
-      const stashItem = currency.find(
-        item => item.typeLine === currencyTypeName
-      );
-
-      if (!stashItem) {
-        return;
-      }
-
-      const { stackSize } = stashItem;
-      const totalValue = stackSize ? Math.round(value * stackSize) : 0;
-      if (totalValue < threshold) {
-        return;
-      }
-
-      items.push({
-        name: currencyTypeName,
-        stackSize,
-        value,
-        totalValue
-      });
-    });
-
-    return items;
-  }, [currency, values]);
-
-  return {
-    pricedItems
-  };
-};
 
 const TotalChaos: FunctionComponent<{ pricedItems: PoeCurrencyItem[] }> = ({
   pricedItems
