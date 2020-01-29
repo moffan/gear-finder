@@ -1,29 +1,27 @@
-import { DataStore } from "../utils/data-store";
-import { getItemData } from "./poe-ninja.api";
+import { PoeNinjaApi } from "./poe-ninja.api";
 import { ipcMain } from "electron";
 import { PoeRequests, IpcRequest, IpcEvent } from "../../common";
+import { CurrencyOverviewType } from "./models";
 
-const key = "currency";
+const api = new PoeNinjaApi();
 
 ipcMain.on(
-  PoeRequests.Currency,
+  PoeRequests.CurrencyValues,
   async ({ sender }: IpcEvent, { onError, onSuccess }: IpcRequest<any>) => {
     try {
-      const dataStore = new DataStore();
+      const requests = [
+        // ...Object.keys(ItemOverviewType).map(key =>
+        //   api.getItemOverview("Metamorph", key as ItemOverviewType)
+        // ),
+        ...Object.keys(CurrencyOverviewType).map(key =>
+          api.getCurrencyOverview("Metamorph", key as CurrencyOverviewType)
+        )
+      ];
 
-      let currency = await dataStore.read<any>(key);
+      const responses = await Promise.all(requests);
+      const data = responses.flatMap(x => x.lines);
 
-      if (!currency) {
-        currency = await getItemData();
-        if (!currency) {
-          return;
-        }
-
-        await dataStore.write(key, currency);
-      }
-
-      const { lines } = currency;
-      sender.send(onSuccess, lines);
+      sender.send(onSuccess, data);
     } catch (error) {
       sender.send(onError, error);
     }

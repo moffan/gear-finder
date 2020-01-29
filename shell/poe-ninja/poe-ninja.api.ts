@@ -1,21 +1,58 @@
-import fetch from "node-fetch";
+import { HttpService } from "../utils";
+import { DataStore } from "../utils/data-store";
+import {
+  PoeNinjaResponse,
+  CurrencyOverviewType,
+  ItemOverviewType
+} from "./models";
 
-const ninjaUrl = (dataSource: string, league: string, type: string) =>
-  `https://poe.ninja/api/data/${dataSource}?league=${league}&type=${type}`;
+export class PoeNinjaApi {
+  private http = new HttpService();
+  private dataStore = new DataStore();
 
-export const getItemData = (
-  league: string = "Metamorph",
-  type: string = "Currency"
-) => {
-  const url = ninjaUrl("itemoverview", league, type);
+  public async getCurrencyOverview(
+    league: string,
+    type: CurrencyOverviewType
+  ): Promise<PoeNinjaResponse> {
+    let data = await this.dataStore.read<PoeNinjaResponse>(type);
+    if (!data) {
+      const url = new URL("https://poe.ninja/api/data/currencyoverview");
+      url.searchParams.append("league", league);
+      url.searchParams.append("type", type);
+      url.searchParams.append("language", "en");
 
-  return fetch(url).then(result => {
-    if (result.ok) {
-      return result.json();
+      data = await this.http.get(url);
+      if (!data) {
+        return Promise.reject();
+      }
+
+      await this.dataStore.write(type, data);
     }
 
-    // tslint:disable-next-line: no-console
-    console.log(result);
-    return null;
-  });
-};
+    return data;
+  }
+
+  public async getItemOverview(
+    league: string,
+    type: ItemOverviewType
+  ): Promise<PoeNinjaResponse> {
+    let data = await this.dataStore.read<PoeNinjaResponse>(type);
+    if (!data) {
+      const url = new URL("https://poe.ninja/api/data/itemoverview");
+      url.searchParams.append("league", league);
+      url.searchParams.append("type", type);
+      url.searchParams.append("language", "en");
+
+      data = await this.http.get(url);
+      if (!data) {
+        return Promise.reject();
+      }
+
+      await this.dataStore.write(type, data);
+
+      return Promise.reject();
+    }
+
+    return data;
+  }
+}

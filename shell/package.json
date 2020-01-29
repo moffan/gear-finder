@@ -8,12 +8,12 @@
   "devDependencies": {
     "@types/electron-devtools-installer": "2.2.0",
     "@types/node": "13.1.8",
-    "@types/node-fetch": "2.5.4",
     "electron": "7.1.9",
     "electron-devtools-installer": "2.2.4",
     "typescript": "3.7.5"
   },
   "dependencies": {
-    "node-fetch": "2.6.0"
+    "axios": "0.19.2",
+    "axios-rate-limit": "1.2.1"
   }
 }

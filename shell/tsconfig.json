@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "lib": ["es2018", "esnext.asynciterable", "dom"],
+    "lib": ["ESNext", "dom"],
     "module": "commonjs",
     "outDir": "../.lib",
     "sourceMap": true,

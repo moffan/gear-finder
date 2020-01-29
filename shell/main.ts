@@ -6,6 +6,7 @@ import * as path from "path";
 import * as url from "url";
 import { Channels } from "../common";
 
+import "./auth";
 import "./search";
 import "./trade";
 import "./poe-ninja";

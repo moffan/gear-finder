@@ -1,39 +1,24 @@
-import { POE_URL_STASH_ITEMS } from "../constants";
 import { ipcMain } from "electron";
 import { PoeRequests, IpcEvent, IpcRequest } from "../../common";
-import { HttpService } from "../utils";
+import { StashTabResponse } from "./models";
+import { CharacterWindowApi } from "./character-window.api";
 
-const getStashItems = async (
-  sessionId: string,
-  accountName: string,
-  realm: string,
-  league: string,
-  tabs: number,
-  tabIndex: number,
-  isPublic: boolean
-) => {
-  const httpService = new HttpService(sessionId);
-
-  const url = new URL(POE_URL_STASH_ITEMS);
-  url.searchParams.append("accountName", accountName);
-  url.searchParams.append("realm", realm);
-  url.searchParams.append("league", league);
-  url.searchParams.append("tabs", tabs.toString());
-  url.searchParams.append("tabIndex", tabIndex.toString());
-  url.searchParams.append("public", isPublic.toString());
-
-  return await httpService.get(url);
-};
+const api = new CharacterWindowApi();
 
 ipcMain.on(
-  PoeRequests.Stash,
+  PoeRequests.StashTab,
   async (
     { sender }: IpcEvent,
     {
       payload,
       onError,
       onSuccess
-    }: IpcRequest<{ poesessid: string; accountName: string; league: string }>
+    }: IpcRequest<{
+      poesessid: string;
+      accountName: string;
+      league: string;
+      tabs: number[];
+    }>
   ) => {
     if (!payload) {
       return sender.send(
@@ -42,21 +27,47 @@ ipcMain.on(
       );
     }
 
-    const { accountName, poesessid, league } = payload;
+    const { accountName, poesessid, league, tabs } = payload;
     if (!accountName || !poesessid) {
       return sender.send(onError, "accountName and poesessid must be provided");
     }
 
-    const data = await getStashItems(
+    const data = await api.getStashItems(
       poesessid,
       accountName,
       "pc",
       league,
       1,
-      0,
-      false
+      tabs
     );
 
-    sender.send(onSuccess, data);
+    try {
+      sender.send(onSuccess, data);
+    } catch (error) {
+      sender.send(onError, error);
+    }
+  }
+);
+
+ipcMain.on(
+  PoeRequests.StashTabs,
+  async (
+    { sender }: IpcEvent,
+    {
+      payload,
+      onError,
+      onSuccess
+    }: IpcRequest<{ poesessid: string; accountName: string; league: string }>
+  ) => {
+    try {
+      const { accountName, poesessid, league } = payload;
+      const tabs = await api.getStashTabs(poesessid, accountName, "pc", league);
+      sender.send(
+        onSuccess,
+        tabs.tabs.map(({ n, type, id, i }) => ({ name: n, type, id, i }))
+      );
+    } catch (error) {
+      sender.send(onError, error);
+    }
   }
 );

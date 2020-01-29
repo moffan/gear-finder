@@ -1,7 +1,6 @@
 import { ipcMain } from "electron";
-import fs from "fs";
-import fetch from "node-fetch";
 import { IpcEvent, IpcRequest, PoeRequests } from "../../common";
+import { SearchApi } from "./search.api";
 
 ipcMain.on(
   PoeRequests.Exchange,
@@ -11,38 +10,15 @@ ipcMain.on(
   ) => {
     const { have, want, league, onlineStatus } = payload;
 
-    const searchOptions = {
-      exchange: {
-        have,
-        status: {
-          option: onlineStatus
-        },
-        want
-      }
-    };
+    const searchApi = new SearchApi();
 
-    try {
-      const result = await fetch(
-        `https://www.pathofexile.com/api/trade/exchange/${league}`,
-        {
-          body: JSON.stringify(searchOptions),
-          headers: {
-            "content-type": "application/json"
-          },
-          method: "POST"
-        }
-      ).then(res => {
-        if (res.ok) {
-          return res.json();
-        }
+    searchApi.searchExchange(have, want, league, onlineStatus);
 
-        throw new Error(res.status.toString());
-      });
-
-      fs.writeFileSync("data.json", JSON.stringify(result));
-      sender.send(onSuccess);
-    } catch (error) {
-      sender.send(onSuccess, error);
-    }
+    // try {
+    //   // fs.writeFileSync("data.json", JSON.stringify(result));
+    //   sender.send(onSuccess);
+    // } catch (error) {
+    //   sender.send(onSuccess, error);
+    // }
   }
 );

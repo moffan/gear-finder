@@ -1,31 +1,39 @@
-import fetch, { Response } from "node-fetch";
+import axios, { AxiosInstance } from "axios";
+import rateLimit from "axios-rate-limit";
 
 export class HttpService {
-  private readonly defaultHeaders: { [key: string]: string } = {};
+  private readonly http: AxiosInstance = rateLimit(axios.create(), {
+    perMilliseconds: 1000,
+    maxRequests: 2
+  });
 
-  constructor(sessionId?: string) {
-    if (!!sessionId) {
-      this.defaultHeaders.cookie = `POESESSID=${sessionId}`;
-    }
-  }
+  private getCookieHeader = (poesessid?: string) =>
+    poesessid ? { cookie: `POESESSID=${poesessid}` } : {};
 
-  public async get<T>(url: URL | string): Promise<T> {
+  public async get<T>(url: URL | string, poesessid?: string): Promise<T> {
     const requestUrl = typeof url === "string" ? new URL(url) : url;
 
-    const response = await fetch(requestUrl.toJSON(), {
-      headers: { ...this.defaultHeaders },
-      method: "GET"
+    const response = await this.http.get<T>(requestUrl.toJSON(), {
+      headers: this.getCookieHeader(poesessid)
     });
-    this.checkResponse(response);
 
-    return await response.json();
+    return response.data;
   }
 
-  private checkResponse(response: Response) {
-    if (!response.ok) {
-      // tslint:disable-next-line: no-console
-      console.error(response);
-      throw new Error(`${response.status}:${response.statusText}`);
-    }
+  public async post<T extends {}, TT extends {}>(
+    url: URL | string,
+    body: T,
+    poesessid?: string
+  ): Promise<TT> {
+    const requestUrl = typeof url === "string" ? new URL(url) : url;
+
+    const response = await this.http.post(requestUrl.toJSON(), body, {
+      headers: {
+        "content-type": "application/json",
+        ...this.getCookieHeader(poesessid)
+      }
+    });
+
+    return Promise.resolve<TT>(response.data);
   }
 }
