@@ -1,6 +1,6 @@
 # gear-finder
 
-Notice! 
+## Notice! 
 
 It does not do much of anything atm.
 
