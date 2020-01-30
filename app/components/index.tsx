@@ -5,6 +5,7 @@ export * from "./footer-bar";
 export * from "./table";
 export * from "./inputs";
 export * from "./list";
+export * from "./selection";
 
 export const ScrollViewer = styled.div`
   display: flex;
