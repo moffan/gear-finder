@@ -4,6 +4,8 @@
 
 It does not do much of anything atm.
 
+## Idea
+
 The ide of this project is to help new players and players like myself,
 that find it hard to find the right items for my build. By helping you setting up your item searches in an easier way.
 
