@@ -2,6 +2,7 @@ import { WebContents } from "electron";
 
 export * from "./poe-ninja.models";
 export * from "./character-window.models";
+export * from "./trade.models";
 
 export type CurrentLeagues = League[];
 
