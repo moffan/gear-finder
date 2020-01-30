@@ -1,35 +1,26 @@
 import { ipcMain } from "electron";
-import {
-  CurrentLeagues,
-  IpcEvent,
-  IpcRequest,
-  PoeRequests
-} from "../../common";
-import { HttpService } from "../utils";
-import { DataStore } from "../utils/data-store";
+import { IpcEvent, IpcRequest, PoeRequests } from "../../common";
+import { TradeApi } from "./trade.api";
 
-const POE_URL_LEAGUE = "https://www.pathofexile.com/api/trade/data/leagues";
+const api = new TradeApi();
 
-interface Leagues {
-  result: CurrentLeagues;
-}
+ipcMain.on(
+  PoeRequests.Stats,
+  async ({ sender }: IpcEvent, { onError, onSuccess }: IpcRequest<any>) => {
+    try {
+      const stats = await api.getStats();
+      sender.send(onSuccess, stats);
+    } catch (error) {
+      sender.send(onError, error);
+    }
+  }
+);
 
 ipcMain.on(
   PoeRequests.CurrentLeagues,
   async ({ sender }: IpcEvent, { onError, onSuccess }: IpcRequest<any>) => {
     try {
-      const leagueKey = "current-leagues";
-
-      const data = new DataStore();
-      let currentLeagues = await data.read<Leagues>(leagueKey);
-
-      if (!currentLeagues) {
-        const http = new HttpService();
-
-        currentLeagues = await http.get<Leagues>(POE_URL_LEAGUE);
-        await data.write(leagueKey, currentLeagues);
-      }
-
+      const currentLeagues = await api.getCurrentLeagues();
       sender.send(onSuccess, currentLeagues.result);
     } catch (error) {
       sender.send(onError, error);
