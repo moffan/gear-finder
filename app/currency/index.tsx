@@ -2,9 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Table, Caption, Tbody, Tr, Td, Thead, Th } from "../components";
 import { useCurrencyValues, PoeCurrencyItem } from "./currency-values.hook";
 
-
-
-
 const TotalChaos: FunctionComponent<{ pricedItems: PoeCurrencyItem[] }> = ({
   pricedItems
 }) => {
@@ -14,7 +11,7 @@ const TotalChaos: FunctionComponent<{ pricedItems: PoeCurrencyItem[] }> = ({
   return <span>Total Chaos: {Math.round(total)}</span>;
 };
 
-export const Currency = () => {
+export const Currency: FunctionComponent = () => {
   const { pricedItems } = useCurrencyValues();
 
   return (

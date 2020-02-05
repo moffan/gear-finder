@@ -46,9 +46,7 @@ export class SearchApi {
 
     //     throw new Error(res.status.toString());
     //   })
-    //   // tslint:disable-next-line: no-console
     //   .then(console.log)
-    //   // tslint:disable-next-line: no-console
     //   .catch(console.error);
   }
 

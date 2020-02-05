@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { HashRouter, Switch, Route, Link } from "react-router-dom";
 import {
   Aside,
@@ -13,7 +13,7 @@ import { Home } from "./home";
 import { Currency } from "./currency";
 import { Search } from "./search";
 
-const App = () => (
+const App: FunctionComponent = () => (
   <HashRouter>
     <UserProvider>
       <Container>

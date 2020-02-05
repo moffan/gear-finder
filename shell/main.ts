@@ -78,14 +78,12 @@ app.on("ready", () => {
     return Promise.all([installExtension(REACT_DEVELOPER_TOOLS)])
       .then(names => {
         for (const name of names) {
-          // tslint:disable-next-line: no-console
           console.log("Added Extension: ", name);
         }
 
         createWindow();
       })
       .catch(err => {
-        // tslint:disable-next-line: no-console
         console.log("An error occurred: ", err);
       });
   }

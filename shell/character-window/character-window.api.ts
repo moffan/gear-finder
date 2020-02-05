@@ -23,7 +23,7 @@ export class CharacterWindowApi {
 
       tabs = await this.httpService.get(url, poesessid);
       if (tabs) {
-        this.store.write("getStashTabs", tabs)
+        this.store.write("getStashTabs", tabs);
       }
     }
 
@@ -52,14 +52,15 @@ export class CharacterWindowApi {
         url.searchParams.append("public", "false");
 
         storedTab = await this.httpService.get(url, poesessid);
-
-        await this.store.write(key, storedTab!);
+        if (storedTab) {
+          await this.store.write(key, storedTab);
+        }
       }
 
-      return !!storedTab ? storedTab.items : [];
+      return storedTab ? storedTab.items : [];
     });
 
     const stashTabsItems = await Promise.all(requests);
     return stashTabsItems.flat();
   }
-} 6645646456456777
+}

@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2015",
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": ["dom", "esnext"]
+    "lib": ["DOM", "ESNext"]
   },
   "exclude": ["./node_modules", "./dist"]
 }

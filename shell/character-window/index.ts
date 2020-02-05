@@ -1,6 +1,5 @@
 import { ipcMain } from "electron";
 import { PoeRequests, IpcEvent, IpcRequest } from "../../common";
-import { StashTabResponse } from "./models";
 import { CharacterWindowApi } from "./character-window.api";
 
 const api = new CharacterWindowApi();

@@ -43,13 +43,19 @@ export const UserProvider: FunctionComponent = ({ children }) => {
 
   const api = {
     send<T>(request: PoeRequests, payload?: any): Promise<T> {
-      const { accountName, poesessid, league } = user;
+      if (user) {
+        const { accountName, poesessid, league } = user;
+
+        return apiService.send<T>(request, {
+          ...payload,
+          accountName,
+          poesessid,
+          league
+        });
+      }
 
       return apiService.send<T>(request, {
-        ...payload,
-        accountName,
-        poesessid,
-        league
+        ...payload
       });
     }
   };
