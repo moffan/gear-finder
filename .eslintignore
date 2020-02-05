@@ -1,0 +1,9 @@
+node_modules
+.data
+.lib
+
+*.js
+*.log
+
+# temp
+characters/

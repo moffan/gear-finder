@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ipcMain } from "electron";
 import { IpcEvent, IpcRequest, PoeRequests } from "../../common";
 import { SearchApi } from "./search.api";

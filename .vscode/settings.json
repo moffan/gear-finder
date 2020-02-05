@@ -1,5 +1,9 @@
 {
     "files.exclude": {
         "**/node_modules": true
-    }
+    },
+    "eslint.validate": ["typescript", "typescriptreact"],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
 }

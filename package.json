@@ -5,14 +5,25 @@
   "main": ".lib/shell/main.js",
   "license": "ISC",
   "scripts": {
-    "start": "webpack-dev-server --config ./app/webpack.config.js",
     "build": "yarn workspaces run build",
     "build:shell": "tsc --pretty -p ./shell",
-    "clean":"rimraf **/node_modules **/lib"
+    "clean": "rimraf **/node_modules **/lib",
+    "lint": "eslint . --ext .ts,.tsx",
+    "start": "webpack-dev-server --config ./app/webpack.config.js"
   },
   "workspaces": [
     "app",
     "common",
     "shell"
-  ]
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "2.19.0",
+    "@typescript-eslint/parser": "2.19.0",
+    "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "7.18.3",
+    "prettier": "1.19.1",
+    "typescript": "3.7.5"
+  }
 }

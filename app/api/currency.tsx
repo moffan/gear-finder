@@ -12,7 +12,6 @@ export const useCurrency = () => {
         tabs: stash.activeTabs.map(item => item.i)
       })
       .then(setCurrency)
-      // tslint:disable-next-line: no-console
       .catch(console.error);
   }, []);
 
@@ -29,7 +28,6 @@ export const usePoeNijaValues = () => {
         tabs: stash.activeTabs.map(item => item.i)
       })
       .then(setCurrencyValues)
-      // tslint:disable-next-line: no-console
       .catch(console.error);
   }, []);
 

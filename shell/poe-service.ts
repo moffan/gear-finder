@@ -1,7 +1,40 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ipcMain, WebContents } from "electron";
-import fetch from "node-fetch";
 import { URLSearchParams } from "url";
 import { IpcEvent, IpcRequest, PoeRequests } from "../common";
+
+const poeFetch = (
+  url: string,
+  sessionId: string,
+  sender: WebContents,
+  onSuccess: string,
+  onError: string
+) => {
+  fetch(url, {
+    headers: {
+      Cookie: `POESESSID=${sessionId}`
+    }
+  })
+    .then(res => {
+      if (res.ok) {
+        return res
+          .json()
+          .then(data => {
+            sender.send(onSuccess, data);
+          })
+          .catch(err => {
+            sender.send(onError, err);
+          });
+      }
+
+      res.text().then(err => {
+        sender.send(onError, err);
+      });
+    })
+    .catch(err => {
+      sender.send(onError, err);
+    });
+};
 
 ipcMain.on(
   PoeRequests.Character,
@@ -132,36 +165,3 @@ ipcMain.on(
       .catch(console.error);
   }
 );
-
-const poeFetch = (
-  url: string,
-  sessionId: string,
-  sender: WebContents,
-  onSuccess: string,
-  onError: string
-) => {
-  fetch(url, {
-    headers: {
-      Cookie: `POESESSID=${sessionId}`
-    }
-  })
-    .then(res => {
-      if (res.ok) {
-        return res
-          .json()
-          .then(data => {
-            sender.send(onSuccess, data);
-          })
-          .catch(err => {
-            sender.send(onError, err);
-          });
-      }
-
-      res.text().then(err => {
-        sender.send(onError, err);
-      });
-    })
-    .catch(err => {
-      sender.send(onError, err);
-    });
-};

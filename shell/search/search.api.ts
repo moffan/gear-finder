@@ -1,4 +1,4 @@
-import { DataStore, HttpService } from "../utils";
+import { HttpService } from "../utils";
 
 export class SearchApi {
   private http: HttpService = new HttpService();
