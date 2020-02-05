@@ -1,14 +1,5 @@
-import styled from "styled-components";
 import React, { FunctionComponent } from "react";
-
-const Input = styled.input`
-  padding: 0.5em;
-  margin: 0.5em;
-  color: "palevioletred";
-  background: papayawhip;
-  border: none;
-  border-radius: 3px;
-`;
+import { Input } from "./base";
 
 export const Checkbox: FunctionComponent<{
   onChange: (isChecked: boolean) => void;
@@ -16,7 +7,7 @@ export const Checkbox: FunctionComponent<{
 }> = ({ isChecked, onChange }) => (
   <Input
     type="checkbox"
-    onChange={e => onChange(e.target.checked)}
+    onChange={(e): void => onChange(e.target.checked)}
     checked={isChecked}
   />
 );

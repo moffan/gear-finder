@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { useLocation } from "react-router-dom";
 
 const Footer = styled.div`
@@ -9,12 +9,12 @@ const Footer = styled.div`
   justify-content: space-between;
 `;
 
-const Location = () => {
+const Location: FunctionComponent = () => {
   const location = useLocation();
   return <div>Location: {location.pathname}</div>;
 };
 
-export const FooterBar = () => (
+export const FooterBar: FunctionComponent = () => (
   <Footer>
     Footer
     <Location />

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, FunctionComponent } from "react";
 import styled from "styled-components";
 import { UserContext } from "../user";
 
@@ -12,15 +12,15 @@ const TopBar = styled.div`
 const ActionLink = styled.div<{ hide?: boolean }>`
   user-select: none;
   cursor: pointer;
-  visibility: ${props => (props.hide ? "hidden" : "visible")};
+  visibility: ${(props): string => (props.hide ? "hidden" : "visible")};
   &:hover {
     color: blue;
 `;
 
-const Logo = () => <div>Gear Finder</div>;
-const Version = () => <div>Version</div>;
+const Logo: FunctionComponent = () => <div>Gear Finder</div>;
+const Version: FunctionComponent = () => <div>Version</div>;
 
-const LogoutLink = () => {
+const LogoutLink: FunctionComponent = () => {
   const { logout, isAuthenticated } = useContext(UserContext);
 
   return (
@@ -30,7 +30,7 @@ const LogoutLink = () => {
   );
 };
 
-export const Header = () => (
+export const Header: FunctionComponent = () => (
   <TopBar>
     <Logo />
     <Version />
