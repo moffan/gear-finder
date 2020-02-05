@@ -1,25 +1,63 @@
-import React from "react";
-import { useEffect } from "react";
-import { useContext } from "react";
+import React, { useReducer, useContext, useEffect } from "react";
 import { UserContext } from "../user";
 import { PoeRequests, ItemStat, ItemModifiers } from "../../common";
-import { useState } from "react";
-import { DropDown } from "../components";
+import { ComboBox, Row, Button } from "../components";
+import { FunctionComponent } from "react";
+import { Plus, Minus } from "styled-icons/boxicons-regular";
+import { usePersistedState } from "../utils";
 
-export const Search = () => {
+interface ItemGroup extends ItemStat {
+  group?: string;
+}
+
+export const Search: FunctionComponent = () => {
   const { api } = useContext(UserContext);
-  const [craftedModifiers, setCraftedModifiers] = useState<ItemStat[]>([]);
-  const [delveModifiers, setDelveModifiers] = useState<ItemStat[]>([]);
-  const [enchantModifiers, setEnchantModifiers] = useState<ItemStat[]>([]);
-  const [explicitModifiers, setExplicitModifiers] = useState<ItemStat[]>([]);
-  const [fracturedModifiers, setFracturedModifiers] = useState<ItemStat[]>([]);
-  const [implicitModifiers, setImplicitModifiers] = useState<ItemStat[]>([]);
-  const [monsterModifiers, setMonsterModifiers] = useState<ItemStat[]>([]);
-  const [pseudoModifiers, setpSeudoModifiers] = useState<ItemStat[]>([]);
-  const [veiledModifiers, setVeiledModifiers] = useState<ItemStat[]>([]);
+  const [modifiers, setModifiers] = usePersistedState<ItemGroup[]>(
+    "modifiers",
+    []
+  );
+
+  const [selectedModifiers, dispatch] = useReducer(
+    (
+      state: Partial<ItemStat>[],
+      {
+        type,
+        index,
+        modifier
+      }: {
+        type: "add" | "remove" | "set";
+        index?: number;
+        modifier?: ItemStat;
+      }
+    ) => {
+      switch (type) {
+        case "add":
+          return [...state, {}];
+        case "remove":
+          if (state.length > 1) {
+            state.splice(-1, 1);
+            return [...state];
+          }
+
+          return state;
+        // return [{}];
+        case "set":
+          return state.map((item, itemIndex) => {
+            if (itemIndex === index) {
+              return { ...modifier };
+            }
+
+            return item;
+          });
+        default:
+          return state;
+      }
+    },
+    [{}]
+  );
 
   useEffect(() => {
-    const getStats = async () => {
+    const getStats = async (): Promise<void> => {
       const {
         crafted,
         delve,
@@ -28,32 +66,66 @@ export const Search = () => {
         fractured,
         implicit,
         monster,
-        pseudo,
-        veiled
+        pseudo
+        // veiled
       } = await api.send<ItemModifiers>(PoeRequests.Stats);
 
-      setCraftedModifiers(crafted);
-      setDelveModifiers(delve);
-      setEnchantModifiers(enchant);
-      setExplicitModifiers(explicit);
-      setFracturedModifiers(fractured);
-      setImplicitModifiers(implicit);
-      setMonsterModifiers(monster);
-      setpSeudoModifiers(pseudo);
-      setVeiledModifiers(veiled);
+      setModifiers([
+        ...crafted,
+        ...delve,
+        ...enchant,
+        ...explicit,
+        ...fractured,
+        ...implicit,
+        ...monster,
+        ...pseudo
+        // ...veiled
+      ]);
     };
 
-    getStats();
+    if (modifiers.length === 0) {
+      getStats();
+    }
   }, []);
+
   return (
     <>
       <h1>search</h1>
-      <DropDown
-        items={craftedModifiers}
-        defultValue="#% to Fire and Cold Resistances"
-        // tslint:disable-next-line: no-console
-        onSelect={item => console.log(item)}
-      />
+      <Row>
+        <Plus
+          size="24"
+          style={{ cursor: "pointer" }}
+          onClick={(): void => dispatch({ type: "add" })}
+        />
+        <Minus
+          size="24"
+          style={{ cursor: "pointer" }}
+          onClick={(): void => dispatch({ type: "remove" })}
+        />
+      </Row>
+      {selectedModifiers.map((_, index) => (
+        <ComboBox
+          key={index}
+          options={modifiers}
+          defultValue={selectedModifiers[index].text}
+          onSelect={(modifier: ItemStat): void =>
+            dispatch({ type: "set", index, modifier })
+          }
+        />
+      ))}
+      <Button
+        onClick={(): void => {
+          const filterd = selectedModifiers.filter(
+            item => !!item.id && !!item.text && !!item.type
+          );
+
+          if (filterd.length > 0) {
+            console.log(filterd);
+          }
+        }}
+      >
+        Search
+      </Button>
     </>
   );
 };
