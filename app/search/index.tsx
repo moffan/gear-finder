@@ -1,10 +1,14 @@
-import React, { useReducer, useContext, useEffect } from "react";
+import React, {
+  useReducer,
+  useContext,
+  useEffect,
+  FunctionComponent
+} from "react";
 import { UserContext } from "../user";
 import { PoeRequests, ItemStat, ItemModifiers } from "../../common";
 import { ComboBox, Row, Button } from "../components";
-import { FunctionComponent } from "react";
-import { Plus, Minus } from "styled-icons/boxicons-regular";
 import { usePersistedState } from "../utils";
+import { Plus, Minus } from "../components/icons";
 
 interface ItemGroup extends ItemStat {
   group?: string;
@@ -71,14 +75,14 @@ export const Search: FunctionComponent = () => {
       } = await api.send<ItemModifiers>(PoeRequests.Stats);
 
       setModifiers([
-        ...crafted,
-        ...delve,
-        ...enchant,
+        ...pseudo,
         ...explicit,
-        ...fractured,
         ...implicit,
-        ...monster,
-        ...pseudo
+        ...crafted,
+        ...enchant,
+        ...delve,
+        ...fractured,
+        ...monster
         // ...veiled
       ]);
     };
