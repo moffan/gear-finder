@@ -82,20 +82,6 @@ ipcMain.on(
 );
 
 ipcMain.on(
-  PoeRequests.CharacterList,
-  ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
-    const { sessionId } = payload;
-    poeFetch(
-      "https://www.pathofexile.com/character-window/get-characters",
-      sessionId,
-      sender,
-      onSuccess,
-      onError
-    );
-  }
-);
-
-ipcMain.on(
   PoeRequests.CurrentLeagues,
   ({ sender }: IpcEvent, { payload, onError, onSuccess }: IpcRequest<any>) => {
     const { sessionId } = payload;

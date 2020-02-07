@@ -1,6 +1,10 @@
-import { POE_URL_STASH_ITEMS } from "../constants";
-import { StashTabResponse } from "./models";
+import { StashTabResponse, PoeCharacter } from "./models";
 import { HttpService, DataStore } from "../utils";
+
+enum UrlsCharacterWindow {
+  GET_CHARACTERS = "https://www.pathofexile.com/character-window/get-characters",
+  URL_STASH_ITEMS = `https://www.pathofexile.com/character-window/get-stash-items`
+}
 
 export class CharacterWindowApi {
   private readonly httpService: HttpService = new HttpService();
@@ -15,7 +19,7 @@ export class CharacterWindowApi {
     let tabs = await this.store.read<StashTabResponse>("getStashTabs");
 
     if (!tabs) {
-      const url = new URL(POE_URL_STASH_ITEMS);
+      const url = new URL(UrlsCharacterWindow.URL_STASH_ITEMS);
       url.searchParams.append("accountName", accountName);
       url.searchParams.append("realm", realm);
       url.searchParams.append("league", league);
@@ -43,7 +47,7 @@ export class CharacterWindowApi {
       let storedTab = await this.store.read<StashTabResponse>(key);
 
       if (!storedTab) {
-        const url = new URL(POE_URL_STASH_ITEMS);
+        const url = new URL(UrlsCharacterWindow.URL_STASH_ITEMS);
         url.searchParams.append("accountName", accountName);
         url.searchParams.append("realm", realm);
         url.searchParams.append("league", league);
@@ -62,5 +66,12 @@ export class CharacterWindowApi {
 
     const stashTabsItems = await Promise.all(requests);
     return stashTabsItems.flat();
+  }
+
+  public async getCharacterList(poesessid: string): Promise<PoeCharacter[]> {
+    return await this.httpService.get(
+      UrlsCharacterWindow.GET_CHARACTERS,
+      poesessid
+    );
   }
 }

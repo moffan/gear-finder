@@ -6,7 +6,7 @@
     "outDir": "../.lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es5",
+    "target": "ES2015",
     "skipLibCheck": true
   },
   "include": ["main.ts"],

@@ -70,3 +70,21 @@ ipcMain.on(
     }
   }
 );
+
+ipcMain.on(
+  PoeRequests.CharacterList,
+  async (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { sender }: IpcEvent,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    { payload, onError, onSuccess }: IpcRequest<any>
+  ) => {
+    const { accountName, poesessid, league } = payload;
+    const characterList = await api.getCharacterList(poesessid);
+
+    console.log(
+      characterList.filter(character => character.league === league),
+      accountName
+    );
+  }
+);

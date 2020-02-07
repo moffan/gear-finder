@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import rateLimit from "axios-rate-limit";
 
+// const COOKIE_REGEXP = /^[0-9A-Fa-f]{32}$/;
+
 export class HttpService {
   private readonly http: AxiosInstance = rateLimit(axios.create(), {
     perMilliseconds: 1000,

@@ -6,6 +6,22 @@ import {
   ItemOverviewType
 } from "./models";
 
+enum UrlsPoeNinja {
+  // MAP_OVERVIEW = "http://poe.ninja/api/Data/GetMapOverview",
+  CURRENCY_OVERVIEW = "https://poe.ninja/api/data/currencyoverview",
+  ITEMS_OVERVIEW = "https://poe.ninja/api/data/itemoverview"
+  // FRAGMENT_OVERVIEW = "http://poe.ninja/api/Data/GetFragmentOverview",
+  // ESSENCE_OVERVIEW = "http://poe.ninja/api/Data/GetEssenceOverview",
+  // DIV_CARDS_OVERVIEW = "http://poe.ninja/api/Data/GetDivinationCardsOverview",
+  // SKILL_GEM_OVERVIEW = "http://poe.ninja/api/Data/GetSkillGemOverview",
+  // UNIQUE_MAP_OVERVIEW = "http://poe.ninja/api/Data/GetUniqueMapOverview",
+  // UNIQUE_JEWEL_OVERVIEW = "http://poe.ninja/api/Data/GetUniqueJewelOverview",
+  // UNIQUE_FLASK_OVERVIEW = "http://poe.ninja/api/Data/GetUniqueFlaskOverview",
+  // UNIQUE_WEAPON_OVERVIEW = "http://poe.ninja/api/Data/GetUniqueWeaponOverview",
+  // UNIQUE_ARMOUR_OVERVIEW = "http://poe.ninja/api/Data/GetUniqueArmourOverview",
+  // UNIQUE_ACCESSORY_OVERVIEW = "http://poe.ninja/api/Data/GetUniqueAccessoryOverview"
+}
+
 export class PoeNinjaApi {
   private http = new HttpService();
   private dataStore = new DataStore();
@@ -16,7 +32,7 @@ export class PoeNinjaApi {
   ): Promise<PoeNinjaResponse> {
     let data = await this.dataStore.read<PoeNinjaResponse>(type);
     if (!data) {
-      const url = new URL("https://poe.ninja/api/data/currencyoverview");
+      const url = new URL(UrlsPoeNinja.CURRENCY_OVERVIEW);
       url.searchParams.append("league", league);
       url.searchParams.append("type", type);
       url.searchParams.append("language", "en");
@@ -38,7 +54,7 @@ export class PoeNinjaApi {
   ): Promise<PoeNinjaResponse> {
     let data = await this.dataStore.read<PoeNinjaResponse>(type);
     if (!data) {
-      const url = new URL("https://poe.ninja/api/data/itemoverview");
+      const url = new URL(UrlsPoeNinja.ITEMS_OVERVIEW);
       url.searchParams.append("league", league);
       url.searchParams.append("type", type);
       url.searchParams.append("language", "en");

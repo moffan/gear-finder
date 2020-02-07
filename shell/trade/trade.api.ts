@@ -5,6 +5,12 @@ import { HttpService } from "../utils";
 interface Leagues {
   result: CurrentLeagues;
 }
+enum UrlsTradeApi {
+  // LEAGUES = "http://api.pathofexile.com/leagues?type=main&compact=1",
+  LEAGUES = "https://www.pathofexile.com/api/trade/data/leagues",
+  STATS = "https://www.pathofexile.com/api/trade/data/stats",
+  STATIC = "https://www.pathofexile.com/api/trade/data/static"
+}
 
 interface StatsResonse {
   result: {
@@ -22,8 +28,7 @@ export class TradeApi {
     let currentLeagues = await this.data.read<Leagues>(key);
 
     if (!currentLeagues) {
-      const url = "https://www.pathofexile.com/api/trade/data/leagues";
-      currentLeagues = await this.http.get<Leagues>(url);
+      currentLeagues = await this.http.get<Leagues>(UrlsTradeApi.LEAGUES);
       await this.data.write(key, currentLeagues);
     }
 
@@ -35,8 +40,7 @@ export class TradeApi {
     let stats: any = await this.data.read(key);
 
     if (!stats) {
-      const url = "https://www.pathofexile.com/api/trade/data/stats";
-      const response = await this.http.get<StatsResonse>(url);
+      const response = await this.http.get<StatsResonse>(UrlsTradeApi.STATS);
       if (!!response) {
         stats = {};
         for (const { entries, label } of response.result) {
@@ -55,8 +59,7 @@ export class TradeApi {
     let stats: any = await this.data.read(key);
 
     if (!stats) {
-      const url = "https://www.pathofexile.com/api/trade/data/static";
-      stats = await this.http.get<Leagues>(url);
+      stats = await this.http.get<Leagues>(UrlsTradeApi.STATIC);
       if (!!stats) {
         await this.data.write(key, stats);
       }
