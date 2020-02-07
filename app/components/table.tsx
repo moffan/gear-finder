@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const Table = styled.table`
   border: 0.1rem solid black;

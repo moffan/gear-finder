@@ -1,8 +1,9 @@
 import React, { FunctionComponent, useMemo, useState } from "react";
 import { Input, Ul, Span } from "./base";
-import styled from "styled-components";
-import { DownArrow, UpArrow } from "styled-icons/boxicons-regular";
+import styled from "@emotion/styled";
+
 import { ScrollViewer } from "./layout";
+import { UpArrow, DownArrow } from "./icons";
 
 export const ComboBox: FunctionComponent<{
   options: any[];

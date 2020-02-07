@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
+import { colors } from "./colors";
+
+const text = () => {
+  // eslint-disable-next-line no-constant-condition
+  // TODO: replace with react hooks
+  return /\?isDarkMode=true/.test(window.location.search)
+    ? colors.light
+    : colors.dark;
+};
 
 export const ScrollViewer = styled.div`
   display: flex;
@@ -30,13 +39,14 @@ export const SideBar = styled.div`
 `;
 
 export const Content = styled.div`
-  background-color: lightblue;
+  background-color: ${colors.scondary};
   grid-area: main;
   overflow: auto;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   overflow: auto;
+  color: ${text()};
 `;
 
 export const Aside = styled.div`

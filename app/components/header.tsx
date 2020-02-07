@@ -1,9 +1,10 @@
 import React, { useContext, FunctionComponent } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { UserContext } from "../user";
+import { colors } from "./colors";
 
-const TopBar = styled.div`
-  background-color: red;
+const TopBar = styled.header`
+  background-color: ${colors.primary};
   display: flex;
   grid-area: header;
   justify-content: space-between;
@@ -12,9 +13,10 @@ const TopBar = styled.div`
 const ActionLink = styled.div<{ hide?: boolean }>`
   user-select: none;
   cursor: pointer;
-  visibility: ${(props): string => (props.hide ? "hidden" : "visible")};
+  visibility: ${(props: any): string => (props.hide ? "hidden" : "visible")};
   &:hover {
     color: blue;
+  }
 `;
 
 const Logo: FunctionComponent = () => <div>Gear Finder</div>;

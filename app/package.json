@@ -8,12 +8,11 @@
     "build": "webpack"
   },
   "dependencies": {
-    "@types/styled-components": "4.4.2",
+    "@emotion/core": "10.0.27",
+    "@emotion/styled": "10.0.27",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-router-dom": "5.1.2",
-    "styled-components": "5.0.0",
-    "styled-icons": "9.3.0"
+    "react-router-dom": "5.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -23,6 +22,7 @@
     "@babel/preset-react": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "7.8.3",
+    "@emotion/babel-preset-css-prop": "10.0.27",
     "@types/react": "^16.9.18",
     "@types/react-dom": "^16.9.5",
     "@types/react-router-dom": "5.1.3",
