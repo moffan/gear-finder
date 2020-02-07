@@ -1,4 +1,9 @@
-import { app, BrowserWindow, BrowserWindowConstructorOptions } from "electron";
+import {
+  app,
+  BrowserWindow,
+  BrowserWindowConstructorOptions,
+  systemPreferences
+} from "electron";
 import installExtension, {
   REACT_DEVELOPER_TOOLS
 } from "electron-devtools-installer";
@@ -6,7 +11,6 @@ import * as path from "path";
 import * as url from "url";
 import { Channels } from "../common";
 
-import "./auth";
 import "./search";
 import "./trade";
 import "./poe-ninja";
@@ -48,7 +52,13 @@ const createWindow = () => {
         slashes: true
       });
 
-  mainWindow.loadURL(indexUrl);
+  const mainWindowUrl = new URL(indexUrl);
+  mainWindowUrl.searchParams.append(
+    "isDarkMode",
+    systemPreferences.isDarkMode().toString()
+  );
+
+  mainWindow.loadURL(mainWindowUrl.toJSON());
 
   mainWindow.on("close", () => {
     if (!!mainWindow) {
