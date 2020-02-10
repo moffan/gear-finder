@@ -23,7 +23,7 @@ export interface CharacterDollProps extends PoeCharacterEquipment {
   onItemSelected: (item: PoeItem) => void;
 }
 
-const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
+export const CharacterDoll: React.FunctionComponent<CharacterDollProps> = props => {
   const [activeSet, setActiveSet] = useState<1 | 2>(1);
 
   const switchWeaponSet = () => {
@@ -90,5 +90,3 @@ const characterDoll: React.FunctionComponent<CharacterDollProps> = props => {
     </Doll>
   );
 };
-
-export default characterDoll;

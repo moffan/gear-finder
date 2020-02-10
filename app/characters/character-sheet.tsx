@@ -1,55 +1,40 @@
-import React, { useContext } from "react";
-import styled from "@emotion/styled";
+import React, { FunctionComponent, useContext } from "react";
+import { useParams } from "react-router-dom";
 
-import CharacterDoll from "./character-doll";
-import EquipmentConfigurator from "./equipment-configurator";
-import { PoeCharacter } from "../poe-content";
-import { CharacterContext } from "./provider";
+import { Div, H1, Section } from "../components";
+import { CharacterContext } from "./character-provider";
+import { CharacterDoll } from "./character-doll";
+import { PoeCharacterEquipment } from "../../common";
 
-const Sheet = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 10fr;
-`;
+export const Character: FunctionComponent = () => {
+  const { name } = useParams<{ name: string }>();
+  const { getCharacter } = useContext(CharacterContext);
 
-const Header = styled.div`
-  grid-row: 1;
-`;
+  const character = getCharacter(name);
+  if (!character) {
+    return null;
+  }
 
-const Content = styled.div`
-  display: grid;
-  grid-row: 2;
-  grid-template-columns: 1fr 1fr;
-`;
+  const { class: className, level } = character;
 
-const CharacterDetails = ({ name }: PoeCharacter) => (
-  <Header>
-    <h1>{name}</h1>
-  </Header>
-);
+  const setSelectedItem = console.log;
 
-const CharacterSheet: React.FunctionComponent = () => {
-  const {
-    character,
-    equipment,
-    filters,
-    filterDispatcher,
-    selectedItem,
-    setSelectedItem
-  } = useContext(CharacterContext);
+  // const equipment: PoeCharacterEquipment = {};
 
   return (
-    <Sheet>
-      <CharacterDetails {...character} />
-      <Content>
-        <CharacterDoll {...equipment} onItemSelected={setSelectedItem} />
-        <EquipmentConfigurator
-          item={selectedItem}
-          filters={filters}
-          dispatch={filterDispatcher}
-        />
-      </Content>
-    </Sheet>
+    <Div>
+      <Div>
+        <H1>{name}</H1>
+        <Section>
+          {level} {className}
+        </Section>
+      </Div>
+      {/* <CharacterDoll {...equipment} onItemSelected={setSelectedItem} /> */}
+      {/* <EquipmentConfigurator
+        item={selectedItem}
+        filters={filters}
+        dispatch={filterDispatcher}
+      /> */}
+    </Div>
   );
 };
-
-export default CharacterSheet;

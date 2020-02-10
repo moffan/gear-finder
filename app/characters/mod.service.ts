@@ -1,4 +1,10 @@
-import { ItemMod, ItemModSearch, PoeStat, PoeStats, StatType } from ".";
+import {
+  PoeStats,
+  StatType,
+  PoeStat,
+  ItemMod,
+  ItemModSearch
+} from "../../common";
 
 export class ModService {
   private readonly statsMap: Map<StatType, PoeStat[]>;

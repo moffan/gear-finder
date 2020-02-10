@@ -12,6 +12,7 @@ import { UserProvider, Settings } from "./user";
 import { Home } from "./home";
 import { Currency } from "./currency";
 import { Search } from "./search";
+import { CharacterRouter } from "./characters";
 
 const App: FunctionComponent = () => (
   <HashRouter>
@@ -28,9 +29,7 @@ const App: FunctionComponent = () => (
         <Content>
           <Switch>
             <Route path="/search" component={Search} />
-            <Route path="/characters">
-              <div>characters</div>
-            </Route>
+            <Route path="/characters" component={CharacterRouter} />
             <Route path="/currency" component={Currency} />
             <Route path="/settings" component={Settings} />
             <Route path="/" component={Home} />
