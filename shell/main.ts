@@ -53,6 +53,8 @@ const createWindow = () => {
       });
 
   const mainWindowUrl = new URL(indexUrl);
+
+  // TODO: (electron) 'systemPreferences.isDarkMode()' is deprecated and will be removed. Please use 'nativeTheme.shouldUseDarkColors' instead.
   mainWindowUrl.searchParams.append(
     "isDarkMode",
     systemPreferences.isDarkMode().toString()
