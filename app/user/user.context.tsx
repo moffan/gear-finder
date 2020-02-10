@@ -29,6 +29,7 @@ export const UserContext = React.createContext<
     login: (accountName: string, poesessid: string, league: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    /** Access to the API as logged in user. */
     api: ApiService;
     stash: StashTabsSetting;
   } & UserDetails
