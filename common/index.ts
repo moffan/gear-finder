@@ -3,6 +3,7 @@ import { WebContents } from "electron";
 export * from "./poe-ninja.models";
 export * from "./character-window.models";
 export * from "./trade.models";
+export * from "./poe.models";
 
 export type CurrentLeagues = League[];
 
@@ -19,6 +20,7 @@ export enum PoeRequests {
   Character = "POE_CHARACTER",
   CurrentLeagues = "POE_LEAGUES_CURRENT",
   Exchange = "POE_EXCHANGE",
+  Equipment = "POE_CHARACTER_EQUIPMENT",
   ItemSearch = "POE_ITEM_SEARCH",
   Stats = "POE_STATS",
   CurrencyValues = "POE_NINJA_CURRENCY",

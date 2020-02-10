@@ -5,16 +5,6 @@ export interface PoeLeague {
   url: string;
 }
 
-export interface PoeCharacter {
-  ascendancyClass: number;
-  class: string;
-  classId: number;
-  experience: number;
-  league: string;
-  level: number;
-  name: string;
-}
-
 export interface PoeCharacterEquipment {
   Amulet: PoeItem;
   Belt: PoeItem;
@@ -39,6 +29,16 @@ export interface UserInfo {
 export interface Sockets {
   group: number; // group id
   attr: "S" | "I" | "D" | "G"; // S=Strength, I=Intelligence, D=Dexterity, G=white	string
+}
+
+export interface PoeCharacter {
+  name: string;
+  league: string;
+  classId: number;
+  ascendancyClass: number;
+  class: string;
+  level: number;
+  experience: number;
 }
 
 export interface PoeItem {

@@ -35,13 +35,3 @@ export interface StashTabResponse {
   };
   items: StashTabItem[];
 }
-
-export interface PoeCharacter {
-  name: string;
-  league: string;
-  classId: number;
-  ascendancyClass: number;
-  class: string;
-  level: number;
-  experience: number;
-}
