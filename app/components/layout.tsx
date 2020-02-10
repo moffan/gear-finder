@@ -4,7 +4,7 @@ import { colors } from "./colors";
 const text = () => {
   // eslint-disable-next-line no-constant-condition
   // TODO: replace with react hooks
-  return /\?isDarkMode=true/.test(window.location.search)
+  return !/\?isDarkMode=true/.test(window.location.search)
     ? colors.light
     : colors.dark;
 };

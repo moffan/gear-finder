@@ -12,14 +12,22 @@ export const Input = styled.input`
   padding: 0.5em;
   margin: 0.5em;
   color: "palevioletred";
-  background: papayawhip;
+  background-color: "papayawhip";
   border: none;
   border-radius: 1rem;
   flex: 1;
 `;
 
-export const Ul = styled.ul`
+export const Ul = styled.ul<{ listType: "list" | "picker" }>`
   overflow: auto;
+  list-style-type: ${(props: any): string =>
+    props.listType === "picker" ? "none" : ""};
+  cursor: ${(props: any): string =>
+    props.listType === "picker" ? "pointer" : ""};
+  padding: ${(props: any): string =>
+    props.listType === "picker" ? "0px" : ""};
+  user-select: ${(props: any): string =>
+    props.listType === "picker" ? "none" : ""};
 `;
 
 export const Li = styled.li``;
@@ -33,3 +41,13 @@ export const Span = styled.span`
 `;
 
 export const Button = styled.button``;
+
+export const H1 = styled.h1``;
+
+export const H2 = styled.h2``;
+
+export const H3 = styled.h3``;
+
+export const Aside = styled.aside``;
+
+export const Section = styled.section``;
