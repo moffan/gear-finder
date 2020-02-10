@@ -74,17 +74,36 @@ ipcMain.on(
 ipcMain.on(
   PoeRequests.CharacterList,
   async (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { sender }: IpcEvent,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     { payload, onError, onSuccess }: IpcRequest<any>
   ) => {
-    const { accountName, poesessid, league } = payload;
-    const characterList = await api.getCharacterList(poesessid);
+    try {
+      const { poesessid, league } = payload;
+      const characterList = await api.getCharacterList(poesessid);
 
-    console.log(
-      characterList.filter(character => character.league === league),
-      accountName
-    );
+      sender.send(
+        onSuccess,
+        characterList.filter(character => character.league === league)
+      );
+    } catch (error) {
+      sender.send(onError, error);
+    }
+  }
+);
+
+ipcMain.on(
+  PoeRequests.Equipment,
+  async (
+    { sender }: IpcEvent,
+    { payload, onError, onSuccess }: IpcRequest<any>
+  ) => {
+    try {
+      const { name, accountName, poesessid } = payload;
+      const equipment = api.getCharacterEquipment(poesessid, accountName, name);
+
+      sender.send(onSuccess, equipment);
+    } catch (error) {
+      sender.send(onError, error);
+    }
   }
 );
