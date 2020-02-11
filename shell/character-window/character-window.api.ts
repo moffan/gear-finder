@@ -88,15 +88,15 @@ export class CharacterWindowApi {
     return characters ?? [];
   }
 
-  public async getCharacterEquipment(
+  public async getCharacter(
     poesessid: string,
     accountName: string,
     name: string
-  ) {
-    const key = `${name}Equipment`;
-    let equipment = await this.store.read<any>(key);
+  ): Promise<{ items: any[]; character: PoeCharacter }> {
+    const key = `character_${name}`;
+    let character = await this.store.read<any>(key);
 
-    if (!equipment) {
+    if (!character) {
       const url = new URL(
         "https://www.pathofexile.com/character-window/get-items"
       );
@@ -104,13 +104,13 @@ export class CharacterWindowApi {
       url.searchParams.append("character", name);
       url.searchParams.append("accountName", accountName);
 
-      equipment = await this.httpService.get(url.toJSON(), poesessid);
+      character = await this.httpService.get(url.toJSON(), poesessid);
 
-      if (!!equipment) {
-        this.store.write(key, equipment);
+      if (!!character) {
+        this.store.write(key, character);
       }
     }
 
-    return equipment;
+    return character;
   }
 }

@@ -92,16 +92,16 @@ ipcMain.on(
 );
 
 ipcMain.on(
-  PoeRequests.Equipment,
+  PoeRequests.Character,
   async (
     { sender }: IpcEvent,
     { payload, onError, onSuccess }: IpcRequest<any>
   ) => {
     try {
       const { name, accountName, poesessid } = payload;
-      const equipment = api.getCharacterEquipment(poesessid, accountName, name);
+      const character = await api.getCharacter(poesessid, accountName, name);
 
-      sender.send(onSuccess, equipment);
+      sender.send(onSuccess, character);
     } catch (error) {
       sender.send(onError, error);
     }
