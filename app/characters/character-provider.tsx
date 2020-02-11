@@ -3,35 +3,48 @@ import React, {
   FunctionComponent,
   useContext,
   useState,
-  useEffect
+  useEffect,
+  useReducer,
+  useCallback
 } from "react";
-import { PoeCharacter, PoeRequests } from "../../common";
+import { PoeCharacter, PoeRequests, PoeCharacterEquipment } from "../../common";
 import { UserContext } from "../user";
+import { usePersistedState } from "../utils";
 
 export const CharacterContext = createContext<{
-  getCharacter: (name: string) => PoeCharacter;
-  characters: PoeCharacter[];
+  getCharacter: (name: string) => Character;
+  characters: Character[];
 }>({} as any);
 
-export const CharacterProvier: FunctionComponent = ({ children }) => {
-  const user = useContext(UserContext);
-  const [characters, setCharacters] = useState<PoeCharacter[]>([]);
+export interface Character extends PoeCharacter {
+  items: PoeCharacterEquipment[];
+}
 
-  useEffect(() => {
-    Promise.all(
-      characters.map(async character =>
-        user.api.send(PoeRequests.Equipment, character)
-      )
-    ).then(console.log);
-  }, [characters]);
+export const CharacterProvier: FunctionComponent = ({ children }) => {
+  const { api } = useContext(UserContext);
+  const [characters, setCharacters] = usePersistedState<Character[]>(
+    "characters",
+    []
+  );
 
   useEffect(() => {
     const getCharacterList = async () => {
-      const characters = await user.api.send<PoeCharacter[]>(
-        PoeRequests.CharacterList
+      const items = await api.send<PoeCharacter[]>(PoeRequests.CharacterList);
+
+      const characterDetails = await Promise.all(
+        items.map(async item => {
+          const { character, items } = await api.send<{
+            character: PoeCharacter;
+            items: PoeCharacterEquipment[];
+          }>(PoeRequests.Character, {
+            name: item.name
+          });
+
+          return { ...character, items };
+        })
       );
 
-      setCharacters(characters);
+      setCharacters(characterDetails);
     };
 
     if (!characters.length) {
@@ -39,16 +52,13 @@ export const CharacterProvier: FunctionComponent = ({ children }) => {
     }
   }, []);
 
+  const getCharacter = (name: string) =>
+    characters.filter(item => item.name === name)[0];
+
   return (
     <CharacterContext.Provider
       value={{
-        getCharacter: name => {
-          const poeCharacter = characters.filter(
-            item => item.name === name
-          )?.[0];
-
-          return poeCharacter;
-        },
+        getCharacter,
         characters
       }}
     >

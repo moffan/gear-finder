@@ -1,20 +1,7 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  FunctionComponent
-} from "react";
-import { UserContext } from "../user/user.context";
-import { PoeRequests, PoeCharacter } from "../../common";
+import React, { useContext, FunctionComponent } from "react";
+import { PoeCharacter } from "../../common";
 import { Ul, Li, H1, Section, Div } from "../components";
-import {
-  Link,
-  useLocation,
-  Switch,
-  Route,
-  useRouteMatch,
-  useParams
-} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CharacterContext } from "./character-provider";
 
 interface CharacterListItemProps extends PoeCharacter {
@@ -27,6 +14,7 @@ const CharacterListItem: FunctionComponent<CharacterListItemProps> = ({
 }) => {
   const { name, level, class: className } = poeCharacter;
   const { pathname } = useLocation();
+
   return (
     <Li onClick={() => onClick && onClick(poeCharacter)}>
       <Link to={`${pathname}/${name}`}>

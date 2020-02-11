@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, FunctionComponent, useEffect } from "react";
 
 import ItemSlot from "./item-slot";
 import WeaponSlot from "./weapon-slot";
 import FlasksSlot from "./flasks-slot";
-import { PoeItem, PoeCharacterEquipment } from "../../poe-content";
 import {
   Doll,
   WeaponSlot1,
@@ -18,14 +17,36 @@ import {
   Boots,
   Flasks
 } from "./character-doll.components";
+import { PoeCharacterEquipment, PoeItem } from "../../../common";
 
-export interface CharacterDollProps extends PoeCharacterEquipment {
+export interface CharacterDollProps {
+  items: PoeCharacterEquipment[];
   onItemSelected: (item: PoeItem) => void;
 }
 
-export const CharacterDoll: React.FunctionComponent<CharacterDollProps> = props => {
-  const [activeSet, setActiveSet] = useState<1 | 2>(1);
+export const CharacterDoll: FunctionComponent<CharacterDollProps> = ({
+  items,
+  onItemSelected
+}) => {
+  const [weapon, setWeapon] = useState<PoeCharacterEquipment>();
+  const [weapon2, setWeapon2] = useState<PoeCharacterEquipment>();
+  const [offhand, setOffhand] = useState<PoeCharacterEquipment>();
+  const [offhand2, setOffhand2] = useState<PoeCharacterEquipment>();
+  const [amulet, setAmulet] = useState<PoeCharacterEquipment>();
+  const [ring, setRing] = useState<PoeCharacterEquipment>();
+  const [ring2, setRing2] = useState<PoeCharacterEquipment>();
+  const [helm, setHelm] = useState<PoeCharacterEquipment>();
+  const [bodyArmour, setBodyArmour] = useState<PoeCharacterEquipment>();
+  const [belt, setBelt] = useState<PoeCharacterEquipment>();
+  const [gloves, setGloves] = useState<PoeCharacterEquipment>();
+  const [boots, setBoots] = useState<PoeCharacterEquipment>();
+  const [flasks, setFlasks] = useState<PoeCharacterEquipment[]>();
 
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
+
+  const [activeSet, setActiveSet] = useState<1 | 2>(1);
   const switchWeaponSet = () => {
     setActiveSet(activeSet === 1 ? 2 : 1);
   };
@@ -34,58 +55,58 @@ export const CharacterDoll: React.FunctionComponent<CharacterDollProps> = props 
     <Doll>
       <WeaponSlot1>
         <WeaponSlot
-          onClick={props.onItemSelected}
+          onClick={onItemSelected}
           onSwitchWeaponSet={switchWeaponSet}
           activeSet={activeSet}
-          weapon1={props.Weapon}
-          weapon2={props.Weapon2}
+          weapon1={weapon}
+          weapon2={weapon2}
         />
       </WeaponSlot1>
 
       <WeaponSlot2>
         <WeaponSlot
-          onClick={props.onItemSelected}
+          onClick={onItemSelected}
           onSwitchWeaponSet={switchWeaponSet}
           activeSet={activeSet}
-          weapon1={props.Offhand}
-          weapon2={props.Offhand2}
+          weapon1={offhand}
+          weapon2={offhand2}
         />
       </WeaponSlot2>
 
       <Amulet>
-        <ItemSlot onClick={props.onItemSelected} item={props.Amulet} />
+        <ItemSlot onClick={onItemSelected} item={amulet} />
       </Amulet>
 
       <Ring1>
-        <ItemSlot onClick={props.onItemSelected} item={props.Ring} />
+        <ItemSlot onClick={onItemSelected} item={ring} />
       </Ring1>
 
       <Ring2>
-        <ItemSlot onClick={props.onItemSelected} item={props.Ring2} />
+        <ItemSlot onClick={onItemSelected} item={ring2} />
       </Ring2>
 
       <Helm>
-        <ItemSlot onClick={props.onItemSelected} item={props.Helm} />
+        <ItemSlot onClick={onItemSelected} item={helm} />
       </Helm>
 
       <BodyArmour>
-        <ItemSlot onClick={props.onItemSelected} item={props.BodyArmour} />
+        <ItemSlot onClick={onItemSelected} item={bodyArmour} />
       </BodyArmour>
 
       <Belt>
-        <ItemSlot onClick={props.onItemSelected} item={props.Belt} />
+        <ItemSlot onClick={onItemSelected} item={belt} />
       </Belt>
 
       <Gloves>
-        <ItemSlot onClick={props.onItemSelected} item={props.Gloves} />
+        <ItemSlot onClick={onItemSelected} item={gloves} />
       </Gloves>
 
       <Boots>
-        <ItemSlot onClick={props.onItemSelected} item={props.Boots} />
+        <ItemSlot onClick={onItemSelected} item={boots} />
       </Boots>
 
       <Flasks>
-        <FlasksSlot onClick={props.onItemSelected} flasks={props.Flask} />
+        <FlasksSlot onClick={onItemSelected} flasks={flasks ?? []} />
       </Flasks>
     </Doll>
   );
