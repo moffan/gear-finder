@@ -1,5 +1,5 @@
 import { useCurrency, usePoeNijaValues } from "../api/currency";
-import { useState, useMemo, FunctionComponent } from "react";
+import { useState, useMemo } from "react";
 
 export interface PoeCurrencyItem {
   name: string;
@@ -8,7 +8,7 @@ export interface PoeCurrencyItem {
   totalValue: number;
 }
 
-export const useCurrencyValues = (): FunctionComponent => {
+export const useCurrencyValues = () => {
   const currency = useCurrency();
   const values = usePoeNijaValues();
 
