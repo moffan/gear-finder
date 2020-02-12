@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
+import React, { FunctionComponent } from "react";
 import styled from "@emotion/styled";
 
 import Description from "./description";
 import Mods from "./mods";
-import { PoeItem, ItemModSearch } from "../../../poe-content";
+import { Poe } from "../../../../common";
 
 export interface ItemInfoProps {
-  item: PoeItem;
-  onClick: (mod: ItemModSearch) => void;
+  item?: Poe.Item;
+  onClick: (mod: Poe.ItemModSearch) => void;
 }
 
 const Container = styled.div`
@@ -17,7 +17,11 @@ const Container = styled.div`
   grid-template-columns: 1fr 5fr;
 `;
 
-const ItemInfo = ({ item, onClick }: ItemInfoProps) => {
+const ItemInfo: FunctionComponent<ItemInfoProps> = ({ item, onClick }) => {
+  if (!item) {
+    return <Container></Container>;
+  }
+
   return (
     <Container>
       <Description {...item} item={item} />

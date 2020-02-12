@@ -43,7 +43,6 @@ export class ModService {
     }
 
     const error = `Could not find a ${mod.type} stat "${mod.text}"`;
-    // tslint:disable-next-line: no-console
     console.error(error);
     return null;
   };

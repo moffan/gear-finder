@@ -1,14 +1,14 @@
 import React from "react";
 
 import ItemSlot from "./item-slot";
-import { PoeItem } from "../../poe-content";
+import { Poe } from "../../../common";
 
 const FlaskSlots = ({
   flasks,
   onClick
 }: {
-  flasks: PoeItem[];
-  onClick: (item: PoeItem) => void;
+  flasks: Poe.Item[];
+  onClick: (item: Poe.Item) => void;
 }) => (
   <div style={{ display: "flex" }}>
     {flasks

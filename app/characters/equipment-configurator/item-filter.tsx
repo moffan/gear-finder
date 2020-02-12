@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-
-import { ItemModSearch } from "../../poe-content";
-import { IconButton } from "../../components";
+import { Poe } from "../../../common";
+import { Minus } from "../../components/icons";
 
 const Container = styled.div`
   grid-row: 2;
@@ -25,9 +24,9 @@ const MinValue = styled.input`
 `;
 
 interface ItemFilterProps {
-  filters: ItemModSearch[];
-  onChange: (modSearch: ItemModSearch) => void;
-  onRemove: (modSearch: ItemModSearch) => void;
+  filters: Poe.ItemModSearch[];
+  onChange: (modSearch: Poe.ItemModSearch) => void;
+  onRemove: (modSearch: Poe.ItemModSearch) => void;
 }
 
 const ItemFilter: React.FunctionComponent<ItemFilterProps> = ({
@@ -50,7 +49,8 @@ const ItemFilter: React.FunctionComponent<ItemFilterProps> = ({
               }
             }}
           />
-          <IconButton icon="remove_circle" onClick={() => onRemove(filter)} />
+          {/* <IconButton icon="remove_circle" onClick={() => onRemove(filter)} /> */}
+          <Minus></Minus>
         </FilterLine>
       );
     })}

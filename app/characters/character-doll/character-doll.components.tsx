@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 export const Doll = styled.div`
   border: 5px black solid;
   padding: 5px;
-  grid-column: 1;
+  flex: 1;
+  flex-basis: 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(5, 1fr);

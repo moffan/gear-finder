@@ -1,7 +1,7 @@
 import React from "react";
 
 import ItemSlot from "./item-slot";
-import { PoeItem } from "../../poe-content";
+import { Poe } from "../../../common";
 
 const WeaponSlot = ({
   activeSet,
@@ -11,10 +11,10 @@ const WeaponSlot = ({
   onClick
 }: {
   activeSet: 1 | 2;
-  weapon1: PoeItem;
-  weapon2: PoeItem;
+  weapon1?: Poe.Item;
+  weapon2?: Poe.Item;
   onSwitchWeaponSet: () => void;
-  onClick: (item: PoeItem) => void;
+  onClick: (item: Poe.Item) => void;
 }) => (
   <>
     <div

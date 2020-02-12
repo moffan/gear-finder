@@ -2,40 +2,37 @@ import React, {
   createContext,
   FunctionComponent,
   useContext,
-  useState,
   useEffect,
-  useReducer,
-  useCallback
+  useState
 } from "react";
-import { PoeCharacter, PoeRequests, PoeCharacterEquipment } from "../../common";
+import { Poe, PoeRequests } from "../../common";
 import { UserContext } from "../user";
-import { usePersistedState } from "../utils";
 
 export const CharacterContext = createContext<{
   getCharacter: (name: string) => Character;
   characters: Character[];
 }>({} as any);
 
-export interface Character extends PoeCharacter {
-  items: PoeCharacterEquipment[];
+export interface Character extends Poe.Character {
+  items: Poe.CharacterEquipment;
 }
 
 export const CharacterProvier: FunctionComponent = ({ children }) => {
   const { api } = useContext(UserContext);
-  const [characters, setCharacters] = usePersistedState<Character[]>(
-    "characters",
+  const [characters, setCharacters] = useState<Character[]>(
+    // "characters",
     []
   );
 
   useEffect(() => {
     const getCharacterList = async () => {
-      const items = await api.send<PoeCharacter[]>(PoeRequests.CharacterList);
+      const items = await api.send<Poe.Character[]>(PoeRequests.CharacterList);
 
       const characterDetails = await Promise.all(
         items.map(async item => {
           const { character, items } = await api.send<{
-            character: PoeCharacter;
-            items: PoeCharacterEquipment[];
+            character: Poe.Character;
+            items: Poe.CharacterEquipment;
           }>(PoeRequests.Character, {
             name: item.name
           });

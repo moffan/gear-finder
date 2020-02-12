@@ -9,9 +9,10 @@ const Category: React.FunctionComponent<{ categories: any }> = ({
   categories
 }) => (
   <div>
-    {Object.keys(categories).map((category, index) => (
-      <div key={index}>{category}</div>
-    ))}
+    {categories &&
+      Object.keys(categories).map((category, index) => (
+        <div key={index}>{category}</div>
+      ))}
   </div>
 );
 

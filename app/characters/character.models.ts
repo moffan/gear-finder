@@ -1,4 +1,4 @@
-import { PoeCharacter, PoeItem, ItemModSearch } from "../poe-content";
+import { Poe } from "../../common";
 
 export enum ItemSearchActionTypes {
   Add = "ADD",
@@ -13,8 +13,8 @@ export interface ItemSearchAction {
 }
 
 export interface PoeGetItemsResponse {
-  character: PoeCharacter;
-  items: PoeItem[];
+  character: Poe.Character;
+  items: Poe.Item[];
 }
 
 export enum InventoryIds {
@@ -23,7 +23,7 @@ export enum InventoryIds {
 }
 
 export interface ModFilterReducer
-  extends React.Reducer<ItemModSearch[], ModFilterAction> {}
+  extends React.Reducer<Poe.ItemModSearch[], ModFilterAction> {}
 
 export interface ModFilterAction {
   type: ItemSearchActionTypes;

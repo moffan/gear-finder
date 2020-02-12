@@ -1,12 +1,12 @@
 import React from "react";
-import { PoeItem } from "../../poe-content";
+import { Poe } from "../../../common";
 
 const itemSlot = ({
   item,
   onClick
 }: {
-  item: PoeItem;
-  onClick: (item: PoeItem) => void;
+  item?: Poe.Item;
+  onClick: (item: Poe.Item) => void;
 }) => {
   if (item) {
     return (

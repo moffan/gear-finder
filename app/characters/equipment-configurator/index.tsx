@@ -1,24 +1,28 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useContext } from "react";
 import styled from "@emotion/styled";
 
 import ItemInfo from "./item-info/item-info";
 import ItemFilter from "./item-filter";
-import { PoeItem, ItemModSearch } from "../../poe-content";
 import { ItemSearchAction, ItemSearchActionTypes } from "../character.models";
-import { apiService } from "../../common";
-import { PoeRequests } from "../../../common";
+import { PoeRequests, Poe } from "../../../common";
+import { UserContext } from "../../user";
 
 interface EquipmentConfiguratorProps {
-  item?: PoeItem;
-  filters: ItemModSearch[];
+  item?: Poe.Item;
+  filters: Poe.ItemModSearch[];
   dispatch: Dispatch<ItemSearchAction>;
 }
 
 const Container = styled.div`
   background: rgba(0, 0, 0, 0.14);
-  grid-column: 2;
-  display: grid;
-  grid-template-rows: 10fr 10fr 1fr;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  flex-basis: 0;
+`;
+
+const Content = styled.div`
+  flex: 1;
 `;
 
 const Tools = styled.div`
@@ -26,15 +30,15 @@ const Tools = styled.div`
   grid-row: 3;
 `;
 
-const EquipmentConfigurator: React.FunctionComponent<
-  EquipmentConfiguratorProps
-> = ({ item, filters, dispatch }) => {
-  if (!item) {
-    return null;
-  }
+const EquipmentConfigurator: React.FunctionComponent<EquipmentConfiguratorProps> = ({
+  item,
+  filters,
+  dispatch
+}) => {
+  const { api } = useContext(UserContext);
 
-  const itemSearch = (item: PoeItem, filters: ItemModSearch[]) => {
-    apiService
+  const itemSearch = (item: Poe.Item, filters: Poe.ItemModSearch[]) => {
+    api
       .send(PoeRequests.ItemSearch, { item, filters, league: "Synthesis" })
       .then(console.log)
       .catch(console.error);
@@ -42,34 +46,36 @@ const EquipmentConfigurator: React.FunctionComponent<
 
   return (
     <Container>
-      <ItemInfo
-        item={item}
-        onClick={(payload: ItemModSearch) =>
-          dispatch({
-            type: ItemSearchActionTypes.Add,
-            payload
-          })
-        }
-      />
-      <ItemFilter
-        filters={filters}
-        onChange={payload =>
-          dispatch({
-            type: ItemSearchActionTypes.Change,
-            payload
-          })
-        }
-        onRemove={payload =>
-          dispatch({
-            type: ItemSearchActionTypes.Remove,
-            payload
-          })
-        }
-      />
+      <Content>
+        <ItemInfo
+          item={item}
+          onClick={(payload: Poe.ItemModSearch) =>
+            dispatch({
+              type: ItemSearchActionTypes.Add,
+              payload
+            })
+          }
+        />
+        <ItemFilter
+          filters={filters}
+          onChange={payload =>
+            dispatch({
+              type: ItemSearchActionTypes.Change,
+              payload
+            })
+          }
+          onRemove={payload =>
+            dispatch({
+              type: ItemSearchActionTypes.Remove,
+              payload
+            })
+          }
+        />
+      </Content>
       <Tools>
         <button
           disabled={!item || filters.length === 0}
-          onClick={() => itemSearch(item, filters)}
+          onClick={() => item && itemSearch(item, filters)}
         >
           search
         </button>

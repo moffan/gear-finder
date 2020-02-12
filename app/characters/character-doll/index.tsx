@@ -17,35 +17,17 @@ import {
   Boots,
   Flasks
 } from "./character-doll.components";
-import { PoeCharacterEquipment, PoeItem } from "../../../common";
+import { Poe } from "../../../common";
 
 export interface CharacterDollProps {
-  items: PoeCharacterEquipment[];
-  onItemSelected: (item: PoeItem) => void;
+  items: Poe.CharacterEquipment;
+  onItemSelected: (item: Poe.Item) => void;
 }
 
 export const CharacterDoll: FunctionComponent<CharacterDollProps> = ({
   items,
   onItemSelected
 }) => {
-  const [weapon, setWeapon] = useState<PoeCharacterEquipment>();
-  const [weapon2, setWeapon2] = useState<PoeCharacterEquipment>();
-  const [offhand, setOffhand] = useState<PoeCharacterEquipment>();
-  const [offhand2, setOffhand2] = useState<PoeCharacterEquipment>();
-  const [amulet, setAmulet] = useState<PoeCharacterEquipment>();
-  const [ring, setRing] = useState<PoeCharacterEquipment>();
-  const [ring2, setRing2] = useState<PoeCharacterEquipment>();
-  const [helm, setHelm] = useState<PoeCharacterEquipment>();
-  const [bodyArmour, setBodyArmour] = useState<PoeCharacterEquipment>();
-  const [belt, setBelt] = useState<PoeCharacterEquipment>();
-  const [gloves, setGloves] = useState<PoeCharacterEquipment>();
-  const [boots, setBoots] = useState<PoeCharacterEquipment>();
-  const [flasks, setFlasks] = useState<PoeCharacterEquipment[]>();
-
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
-
   const [activeSet, setActiveSet] = useState<1 | 2>(1);
   const switchWeaponSet = () => {
     setActiveSet(activeSet === 1 ? 2 : 1);
@@ -58,8 +40,8 @@ export const CharacterDoll: FunctionComponent<CharacterDollProps> = ({
           onClick={onItemSelected}
           onSwitchWeaponSet={switchWeaponSet}
           activeSet={activeSet}
-          weapon1={weapon}
-          weapon2={weapon2}
+          weapon1={items.Weapon}
+          weapon2={items.Weapon2}
         />
       </WeaponSlot1>
 
@@ -68,45 +50,45 @@ export const CharacterDoll: FunctionComponent<CharacterDollProps> = ({
           onClick={onItemSelected}
           onSwitchWeaponSet={switchWeaponSet}
           activeSet={activeSet}
-          weapon1={offhand}
-          weapon2={offhand2}
+          weapon1={items.Offhand}
+          weapon2={items.Offhand2}
         />
       </WeaponSlot2>
 
       <Amulet>
-        <ItemSlot onClick={onItemSelected} item={amulet} />
+        <ItemSlot onClick={onItemSelected} item={items.Amulet} />
       </Amulet>
 
       <Ring1>
-        <ItemSlot onClick={onItemSelected} item={ring} />
+        <ItemSlot onClick={onItemSelected} item={items.Ring} />
       </Ring1>
 
       <Ring2>
-        <ItemSlot onClick={onItemSelected} item={ring2} />
+        <ItemSlot onClick={onItemSelected} item={items.Ring2} />
       </Ring2>
 
       <Helm>
-        <ItemSlot onClick={onItemSelected} item={helm} />
+        <ItemSlot onClick={onItemSelected} item={items.Helm} />
       </Helm>
 
       <BodyArmour>
-        <ItemSlot onClick={onItemSelected} item={bodyArmour} />
+        <ItemSlot onClick={onItemSelected} item={items.BodyArmour} />
       </BodyArmour>
 
       <Belt>
-        <ItemSlot onClick={onItemSelected} item={belt} />
+        <ItemSlot onClick={onItemSelected} item={items.Belt} />
       </Belt>
 
       <Gloves>
-        <ItemSlot onClick={onItemSelected} item={gloves} />
+        <ItemSlot onClick={onItemSelected} item={items.Gloves} />
       </Gloves>
 
       <Boots>
-        <ItemSlot onClick={onItemSelected} item={boots} />
+        <ItemSlot onClick={onItemSelected} item={items.Boots} />
       </Boots>
 
       <Flasks>
-        <FlasksSlot onClick={onItemSelected} flasks={flasks ?? []} />
+        <FlasksSlot onClick={onItemSelected} flasks={items.Flask ?? []} />
       </Flasks>
     </Doll>
   );
