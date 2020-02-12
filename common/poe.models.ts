@@ -1,24 +1,41 @@
-export interface PoeLeague {
+export interface League {
   endAt: string | null;
   id: string;
   startAt: string | null;
   url: string;
 }
 
-export interface PoeCharacterEquipment {
-  Amulet: PoeItem;
-  Belt: PoeItem;
-  BodyArmour: PoeItem;
-  Boots: PoeItem;
-  Flask: PoeItem[];
-  Gloves: PoeItem;
-  Helm: PoeItem;
-  Offhand: PoeItem;
-  Offhand2: PoeItem;
-  Ring: PoeItem;
-  Ring2: PoeItem;
-  Weapon: PoeItem;
-  Weapon2: PoeItem;
+export enum EquipmentSlotType {
+  Amulet = "Amulet",
+  Belt = "Belt",
+  BodyArmour = "BodyArmour",
+  Boots = "Boots",
+  Flask = "Flask",
+  Gloves = "Gloves",
+  Helm = "Helm",
+  MainInventory = "MainInventory",
+  Offhand = "Offhand",
+  Offhand2 = "Offhand2",
+  Ring = "Ring",
+  Ring2 = "Ring2",
+  Weapon = "Weapon",
+  Weapon2 = "Weapon2"
+}
+
+export interface CharacterEquipment {
+  Amulet?: Item;
+  Belt?: Item;
+  BodyArmour?: Item;
+  Boots?: Item;
+  Flask?: Item[];
+  Gloves?: Item;
+  Helm?: Item;
+  Offhand?: Item;
+  Offhand2?: Item;
+  Ring?: Item;
+  Ring2?: Item;
+  Weapon?: Item;
+  Weapon2?: Item;
 }
 
 export interface UserInfo {
@@ -31,7 +48,7 @@ export interface Sockets {
   attr: "S" | "I" | "D" | "G"; // S=Strength, I=Intelligence, D=Dexterity, G=white	string
 }
 
-export interface PoeCharacter {
+export interface Character {
   name: string;
   league: string;
   classId: number;
@@ -41,7 +58,7 @@ export interface PoeCharacter {
   experience: number;
 }
 
-export interface PoeItem {
+export interface Item {
   verified: boolean;
   w: number; // 	slot width
   h: number; // slot height
@@ -91,14 +108,14 @@ export interface LeagueData {
   text: string;
 }
 
-export interface PoeStat {
+export interface Stat {
   id: string;
   text: string;
   type: StatType;
 }
 
-export interface PoeStats {
-  entries: PoeStat[];
+export interface Stats {
+  entries: Stat[];
   label: StatType;
 }
 
@@ -114,7 +131,7 @@ export enum StatType {
   Delve = "Delve"
 }
 
-export interface ItemModSearch extends PoeStat {
+export interface ItemModSearch extends Stat {
   value: number;
   regex: string;
 }

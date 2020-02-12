@@ -1,9 +1,11 @@
 import { WebContents } from "electron";
 
-export * from "./poe-ninja.models";
+import * as Poe from "./poe.models";
 export * from "./character-window.models";
 export * from "./trade.models";
-export * from "./poe.models";
+
+// TODO: move to shell
+export { Poe };
 
 export type CurrentLeagues = League[];
 
