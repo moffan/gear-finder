@@ -1,6 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+
+import { PoeNinjaItemValue, PoeRequests, StashTabItem } from "../../common";
 import { UserContext } from "../user";
-import { PoeRequests, StashTabItem, PoeNinjaItemValue } from "../../common";
 
 export const useCurrency = () => {
   const { api, stash } = useContext(UserContext);

@@ -1,6 +1,16 @@
 import React, { FunctionComponent } from "react";
-import { Table, Caption, Tbody, Tr, Td, Thead, Th } from "../components";
-import { useCurrencyValues, PoeCurrencyItem } from "./currency-values.hook";
+
+import {
+  H2,
+  ScrollViewer,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr
+} from "../components";
+import { PoeCurrencyItem, useCurrencyValues } from "./currency-values.hook";
 
 const TotalChaos: FunctionComponent<{ pricedItems: PoeCurrencyItem[] }> = ({
   pricedItems
@@ -8,7 +18,7 @@ const TotalChaos: FunctionComponent<{ pricedItems: PoeCurrencyItem[] }> = ({
   const total = pricedItems
     .map(item => (item.totalValue ? item.totalValue : 0))
     .reduce((sum, chaosValue) => sum + chaosValue, 0);
-  return <span>Total Chaos: {Math.round(total)}</span>;
+  return <H2>Total Chaos: {Math.round(total)}</H2>;
 };
 
 export const Currency: FunctionComponent = () => {
@@ -17,23 +27,19 @@ export const Currency: FunctionComponent = () => {
   return (
     <>
       <h1>Currency</h1>
-
-      <Table>
-        <Caption>
-          <TotalChaos pricedItems={pricedItems} />
-        </Caption>
-        <Thead>
-          <Tr>
-            <Th scope="col">Name</Th>
-            <Th scope="col">Count</Th>
-            <Th scope="col">Value</Th>
-            <Th scope="col">Total Value</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {pricedItems
-            .sort((a, b) => (a.totalValue < b.totalValue ? 1 : -1))
-            .map(({ name, stackSize, value, totalValue }, key) => (
+      <TotalChaos pricedItems={pricedItems} />
+      <ScrollViewer>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th scope="col">Name</Th>
+              <Th scope="col">Count</Th>
+              <Th scope="col">Value</Th>
+              <Th scope="col">Total Value</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {pricedItems.map(({ name, stackSize, value, totalValue }, key) => (
               <Tr key={key}>
                 <Td>{name}</Td>
                 <Td>{stackSize}</Td>
@@ -41,8 +47,9 @@ export const Currency: FunctionComponent = () => {
                 <Td>{totalValue}</Td>
               </Tr>
             ))}
-        </Tbody>
-      </Table>
+          </Tbody>
+        </Table>
+      </ScrollViewer>
     </>
   );
 };

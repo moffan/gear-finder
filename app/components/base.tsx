@@ -18,16 +18,8 @@ export const Input = styled.input`
   flex: 1;
 `;
 
-export const Ul = styled.ul<{ listType: "list" | "picker" }>`
+export const Ul = styled.ul`
   overflow: auto;
-  list-style-type: ${(props: any): string =>
-    props.listType === "picker" ? "none" : ""};
-  cursor: ${(props: any): string =>
-    props.listType === "picker" ? "pointer" : ""};
-  padding: ${(props: any): string =>
-    props.listType === "picker" ? "0px" : ""};
-  user-select: ${(props: any): string =>
-    props.listType === "picker" ? "none" : ""};
 `;
 
 export const Li = styled.li``;

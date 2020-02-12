@@ -1,6 +1,6 @@
-import { DataStore } from "../utils/data-store";
 import { CurrentLeagues, ItemStat } from "../../common";
 import { HttpService } from "../utils";
+import { DataStore } from "../utils/data-store";
 
 interface Leagues {
   result: CurrentLeagues;

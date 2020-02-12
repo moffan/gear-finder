@@ -1,14 +1,15 @@
 import React, {
-  useReducer,
+  FunctionComponent,
   useContext,
   useEffect,
-  FunctionComponent
+  useReducer
 } from "react";
+
+import { ItemModifiers, ItemStat, PoeRequests } from "../../common";
+import { Button, ComboBox, Row } from "../components";
+import { Minus, Plus } from "../components/icons";
 import { UserContext } from "../user";
-import { PoeRequests, ItemStat, ItemModifiers } from "../../common";
-import { ComboBox, Row, Button } from "../components";
 import { usePersistedState } from "../utils";
-import { Plus, Minus } from "../components/icons";
 
 interface ItemGroup extends ItemStat {
   group?: string;
@@ -44,7 +45,6 @@ export const Search: FunctionComponent = () => {
           }
 
           return state;
-        // return [{}];
         case "set":
           return state.map((item, itemIndex) => {
             if (itemIndex === index) {
@@ -96,16 +96,8 @@ export const Search: FunctionComponent = () => {
     <>
       <h1>search</h1>
       <Row>
-        <Plus
-          size="24"
-          style={{ cursor: "pointer" }}
-          onClick={(): void => dispatch({ type: "add" })}
-        />
-        <Minus
-          size="24"
-          style={{ cursor: "pointer" }}
-          onClick={(): void => dispatch({ type: "remove" })}
-        />
+        <Plus onClick={(): void => dispatch({ type: "add" })} />
+        <Minus onClick={(): void => dispatch({ type: "remove" })} />
       </Row>
       {selectedModifiers.map((_, index) => (
         <ComboBox

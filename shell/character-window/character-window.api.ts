@@ -1,6 +1,6 @@
+import { Poe } from "../../common";
+import { DataStore, HttpService } from "../utils";
 import { StashTabResponse } from "./models";
-import { HttpService, DataStore } from "../utils";
-import { PoeCharacter } from "../../common";
 
 enum UrlsCharacterWindow {
   GET_CHARACTERS = "https://www.pathofexile.com/character-window/get-characters",
@@ -69,10 +69,10 @@ export class CharacterWindowApi {
     return stashTabsItems.flat();
   }
 
-  public async getCharacterList(poesessid: string): Promise<PoeCharacter[]> {
+  public async getCharacterList(poesessid: string): Promise<Poe.Character[]> {
     const key = "characters";
 
-    let characters = await this.store.read<PoeCharacter[]>(key);
+    let characters = await this.store.read<Poe.Character[]>(key);
 
     if (!characters) {
       characters = await this.httpService.get(
@@ -92,7 +92,7 @@ export class CharacterWindowApi {
     poesessid: string,
     accountName: string,
     name: string
-  ): Promise<{ items: any[]; character: PoeCharacter }> {
+  ): Promise<{ items: Poe.Item[]; character: Poe.Character }> {
     const key = `character_${name}`;
     let character = await this.store.read<any>(key);
 

@@ -1,5 +1,7 @@
+import styled from "@emotion/styled";
 import React, { FunctionComponent } from "react";
-import { Select, Option, Optgroup } from "./base";
+
+import { Optgroup, Option, Select } from "./base";
 
 interface OptionValue {
   id: string;
@@ -65,3 +67,12 @@ export const DropDown: FunctionComponent<{
     </Select>
   );
 };
+
+export const Picker: FunctionComponent = styled.ul`
+  overflow: auto;
+  list-style-type: none;
+  cursor: pointer;
+  padding: 0px;
+  user-select: ${(props: any): string =>
+    props.listType === "picker" ? "none" : ""};
+`;

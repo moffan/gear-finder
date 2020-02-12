@@ -1,13 +1,17 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "parserOptions": {
+    "project": ["./app/tsconfig.json", "./shell/tsconfig.json"]
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended",
+    "plugin:react/recommended",
     "prettier/react",
     "prettier/@typescript-eslint"
   ],
@@ -22,6 +26,22 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": "off", // typescript interfaces
     "no-extra-boolean-cast": "off",
-    "no-useless-escape": "off"
+    "no-useless-escape": "off",
+    "simple-import-sort/sort": [
+      "error",
+
+      {
+        "groups": [
+          // Packages.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ["^@?\\w"],
+          // Relative imports.
+          // Anything that starts with a dot.
+          ["^\\."],
+          // Side effect imports.
+          ["^\\u0000"]
+        ]
+      }
+    ]
   }
 }

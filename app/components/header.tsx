@@ -1,5 +1,6 @@
-import React, { useContext, FunctionComponent } from "react";
 import styled from "@emotion/styled";
+import React, { FunctionComponent, useContext } from "react";
+
 import { UserContext } from "../user";
 import { colors } from "./colors";
 

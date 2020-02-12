@@ -1,8 +1,9 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { Login } from ".";
-import { usePersistedState } from "../utils";
-import { apiService, ApiService } from "../utils/api.service";
+
 import { PoeRequests } from "../../common";
+import { usePersistedState } from "../utils";
+import { ApiService, apiService } from "../utils/api.service";
+import { Login } from ".";
 
 interface UserDetails {
   accountName: string;
@@ -82,7 +83,6 @@ export const UserProvider: FunctionComponent = ({ children }) => {
   };
 
   const logout = () => {
-    // tslint:disable-next-line: no-console
     console.log("logging out");
   };
 

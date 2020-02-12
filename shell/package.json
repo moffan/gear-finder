@@ -9,8 +9,7 @@
     "@types/electron-devtools-installer": "2.2.0",
     "@types/node": "13.7.0",
     "electron": "8.0.0",
-    "electron-devtools-installer": "2.2.4",
-    "typescript": "3.7.5"
+    "electron-devtools-installer": "2.2.4"
   },
   "dependencies": {
     "axios": "0.19.2",

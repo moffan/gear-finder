@@ -1,20 +1,24 @@
 import { useState } from "react";
 
+type ValuePersistor<T> = (value: T) => void;
+
 export const usePersistedState = <T>(
   key: string,
   defaultValue?: T
-): [T, (value: T) => void] => {
+): [T, ValuePersistor<T>] => {
   const storedValue = localStorage.getItem(key);
   const [value, setValue] = useState<T>(
     !!storedValue ? JSON.parse(storedValue) : defaultValue
   );
 
-  return [
-    value,
-    // tslint:disable-next-line: no-shadowed-variable
-    (value: T) => {
-      localStorage.setItem(key, JSON.stringify(value));
-      setValue(value);
-    }
-  ];
+  const persistValue: ValuePersistor<T> = (value: T) => {
+    localStorage.setItem(key, JSON.stringify(value));
+    setValue(value);
+  };
+
+  if (!storedValue && !!defaultValue) {
+    persistValue(defaultValue);
+  }
+
+  return [value, persistValue];
 };

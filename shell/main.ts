@@ -9,12 +9,14 @@ import installExtension, {
 } from "electron-devtools-installer";
 import * as path from "path";
 import * as url from "url";
+
 import { Channels } from "../common";
 
 import "./search";
 import "./trade";
 import "./poe-ninja";
 import "./character-window";
+import "./poe-service";
 
 let mainWindow: BrowserWindow | null;
 
@@ -87,7 +89,7 @@ const createWindow = () => {
 
 app.on("ready", () => {
   if (isDevMode) {
-    return Promise.all([installExtension(REACT_DEVELOPER_TOOLS)])
+    Promise.all([installExtension(REACT_DEVELOPER_TOOLS)])
       .then(names => {
         for (const name of names) {
           console.log("Added Extension: ", name);
@@ -98,9 +100,9 @@ app.on("ready", () => {
       .catch(err => {
         console.log("An error occurred: ", err);
       });
+  } else {
+    createWindow();
   }
-
-  createWindow();
 });
 
 app.on("window-all-closed", () => {

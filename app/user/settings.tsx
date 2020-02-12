@@ -1,14 +1,15 @@
 import React, { FunctionComponent, useContext } from "react";
+
 import {
   Caption,
+  Checkbox,
+  ScrollViewer,
   Table,
-  Thead,
-  Tr,
-  Th,
   Tbody,
   Td,
-  ScrollViewer,
-  Checkbox
+  Th,
+  Thead,
+  Tr
 } from "../components";
 import { UserContext } from "./user.context";
 

@@ -1,5 +1,7 @@
+import { useMemo } from "react";
+
 import { useCurrency, usePoeNijaValues } from "../api/currency";
-import { useState, useMemo } from "react";
+import { usePersistedState } from "../utils";
 
 export interface PoeCurrencyItem {
   name: string;

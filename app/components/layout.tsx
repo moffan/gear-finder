@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
+
 import { colors } from "./colors";
 
 const text = () => {
-  // eslint-disable-next-line no-constant-condition
-  // TODO: replace with react hooks
-  return !/\?isDarkMode=true/.test(window.location.search)
+  return !window.location.search.includes("?isDarkMode=true")
     ? colors.light
     : colors.dark;
 };
@@ -26,7 +25,7 @@ export const Container = styled.div`
   grid-template-rows: 1fr 23fr 1fr;
   grid-template-areas:
     "header header header"
-    "sidebar main aside"
+    "sidebar main main"
     "sidebar footer footer";
   height: 98vh;
 `;

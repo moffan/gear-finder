@@ -1,9 +1,9 @@
 import { HttpService } from "../utils";
 import { DataStore } from "../utils/data-store";
 import {
-  PoeNinjaResponse,
   CurrencyOverviewType,
-  ItemOverviewType
+  ItemOverviewType,
+  PoeNinjaResponse
 } from "./models";
 
 enum UrlsPoeNinja {

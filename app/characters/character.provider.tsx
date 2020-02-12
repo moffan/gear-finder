@@ -4,7 +4,7 @@ import CharacterContext from "./character.context";
 import { useCharacterService } from "../characters.hooks";
 import { ModFilterReducer, ItemSearchActionTypes } from "../character.models";
 import modFilterReducer from "./mod-filter.reducer";
-import { PoeItem, StatType } from "../../poe-content";
+import { Poe } from "../../../common";
 
 const CharacterProvider: React.FunctionComponent<{ characterName: string }> = ({
   children,
@@ -14,7 +14,7 @@ const CharacterProvider: React.FunctionComponent<{ characterName: string }> = ({
     characterName
   );
 
-  const [selectedItem, setSelectedItem] = useState<PoeItem | undefined>(
+  const [selectedItem, setSelectedItem] = useState<Poe.Item | undefined>(
     undefined
   );
 
