@@ -12,7 +12,7 @@ export const useCurrencyValues = () => {
   const currency = useCurrency();
   const values = usePoeNijaValues();
 
-  const [threshold] = useState<number>(25);
+  const [threshold] = usePersistedState<number>("currency_threshold", 1);
 
   const pricedItems = useMemo(() => {
     if (currency.length === 0 || values.length === 0) {
@@ -63,7 +63,17 @@ export const useCurrencyValues = () => {
       });
     });
 
-    return items.filter(item => item.totalValue >= threshold);
+    return items
+      .filter(item => item.totalValue >= threshold)
+      .sort((a, b) =>
+        a.totalValue < b.totalValue
+          ? 1
+          : a.totalValue > b.totalValue
+          ? -1
+          : a.stackSize < b.stackSize
+          ? -1
+          : 1
+      );
   }, [currency, values]);
 
   return {
