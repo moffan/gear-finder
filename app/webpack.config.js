@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
+const version = require("./package.json").version;
+const webpack = require("webpack");
 
 module.exports = {
   mode: "development",
@@ -29,6 +31,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"]
   },
   plugins: [
+    new webpack.DefinePlugin({ VERSION: JSON.stringify(version) }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../index.html")
     })
