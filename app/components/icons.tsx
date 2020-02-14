@@ -2,12 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { FaCaretDown, FaCaretUp, FaMinus, FaPlus } from "react-icons/fa";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IconProps {
-  onClick: () => void;
-}
-
-export const UpArrow: FunctionComponent<IconProps> = FaCaretDown;
-export const DownArrow: FunctionComponent<IconProps> = FaCaretUp;
-export const Plus: FunctionComponent<IconProps> = FaPlus;
-export const Minus: FunctionComponent<IconProps> = FaMinus;
+export const UpArrow: FunctionComponent = FaCaretDown;
+export const DownArrow: FunctionComponent = FaCaretUp;
+export const Plus: FunctionComponent = FaPlus;
+export const Minus: FunctionComponent = FaMinus;

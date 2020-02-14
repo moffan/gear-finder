@@ -32,14 +32,10 @@ export const Span = styled.span`
   margin: 0.2rem;
 `;
 
-export const Button = styled.button``;
-
 export const H1 = styled.h1``;
 
 export const H2 = styled.h2``;
 
 export const H3 = styled.h3``;
-
-export const Aside = styled.aside``;
 
 export const Section = styled.section``;

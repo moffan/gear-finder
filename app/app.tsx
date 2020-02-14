@@ -4,7 +4,7 @@ import { HashRouter, Link, Route, Switch } from "react-router-dom";
 import { CharacterRouter } from "./characters";
 import {
   // Aside,
-  Container,
+  AppContainer,
   Content,
   FooterBar,
   Header,
@@ -18,7 +18,7 @@ import { Settings, UserProvider } from "./user";
 const App: FunctionComponent = () => (
   <HashRouter>
     <UserProvider>
-      <Container>
+      <AppContainer>
         <Header />
         <SideBar>
           <Link to="/">Home</Link>
@@ -38,7 +38,7 @@ const App: FunctionComponent = () => (
         </Content>
         {/* <Aside>Aside</Aside> */}
         <FooterBar />
-      </Container>
+      </AppContainer>
     </UserProvider>
   </HashRouter>
 );

@@ -5,4 +5,6 @@ export * from "./inputs";
 export * from "./selection";
 export * from "./combo-box";
 export * from "./layout";
+export * from "./buttons";
 export * from "./base";
+export * from "./icons";

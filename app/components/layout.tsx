@@ -14,11 +14,7 @@ export const ScrollViewer = styled.div`
   overflow: auto;
 `;
 
-export const Row = styled.div`
-  display: flex;
-`;
-
-export const Container = styled.div`
+export const AppContainer = styled.div`
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 1fr 7fr 2fr;
@@ -41,14 +37,32 @@ export const Content = styled.div`
   background-color: ${colors.scondary};
   grid-area: main;
   overflow: auto;
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   overflow: auto;
   color: ${text()};
+  display: flex;
 `;
 
 export const Aside = styled.div`
   background-color: yellow;
   grid-area: aside;
+`;
+
+export const Rows = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Columns = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  background-color: orange;
+`;
+
+export const Cell = styled.div<{ size?: number }>`
+  flex: ${props => props.size ?? 1};
+  border: 2px solid blanchedalmond;
+  padding: 1px;
 `;

@@ -9,6 +9,8 @@ const TopBar = styled.header`
   display: flex;
   grid-area: header;
   justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 `;
 
 const ActionLink = styled.div<{ hide?: boolean }>`
@@ -21,7 +23,7 @@ const ActionLink = styled.div<{ hide?: boolean }>`
 `;
 
 const Logo: FunctionComponent = () => <div>Gear Finder</div>;
-const Version: FunctionComponent = () => <div>Version</div>;
+const Version: FunctionComponent = () => <div>Version {VERSION}</div>;
 
 const LogoutLink: FunctionComponent = () => {
   const { logout, isAuthenticated } = useContext(UserContext);
